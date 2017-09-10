@@ -40,7 +40,6 @@ function setup() {
     drawCloud(550,100);
     drawCloud(400,90);
 
-
     fill("black");
     textSize(36);
     text("My Lovely House", 250, 70);
@@ -62,9 +61,7 @@ function drawWindow(x,y,size){
     rect(x+size,y,size,size);
     rect(x,y+size,size,size);
     rect(x+size,y+size,size,size);
-
-
-
+    
     noStroke();
 
 }
