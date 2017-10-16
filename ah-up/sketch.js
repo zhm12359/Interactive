@@ -48,7 +48,9 @@ function Rocket(x,y){
     }
 
     this.updateFlying = function(micLevel) {
-        this.y = height - 100 - micLevel*1000; //FIXUP: NEED BETTER FORMULA
+
+        this.y = this.y - micLevel*100;
+        if(this.y < height - 100) this.y += 3;
 
         if (keyIsDown(LEFT_ARROW) || keyIsDown(65) ) {
             if(this.x>0) this.x -= 3;
