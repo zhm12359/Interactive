@@ -10,6 +10,9 @@ var coins;
 var rocketHeight;
 var score;
 
+var bgImage;
+var bgy = -10000;
+
 // 0 - start state
 // 1 - playing state
 // 2 - game over state
@@ -22,6 +25,7 @@ function setup() {
     mic = new p5.AudioIn();
     createCanvas(screenWidth, screenHeight);
     mic.start();
+    bgImage = loadImage("images/sky.png");
 }
 
 function setupGame() {
@@ -38,9 +42,11 @@ function setupGame() {
     for (i = 0; i < 3; i++) {
         coins.push(new Coin(random(100, 400), random(-100, 0)));
     }
+
 }
 
 function draw() {
+
     switch (state) {
         case 0:
             drawStart();
@@ -54,14 +60,24 @@ function draw() {
     }
 }
 
+function drawBackground(acc){
+    imageMode(CENTER);
+    image(bgImage, screenWidth/2, bgy, 400, 20611  );
+    bgy +=acc;
+    if(bgy>=16000) bgy = -10000;
+}
+
 function drawStart() {
-    background("lightblue");
+    bgy=-10000;
+    imageMode(CENTER);
+    image(bgImage, screenWidth/2, bgy, 400, 20611  );
     rectMode(CENTER);
     textAlign(CENTER);
     textSize(36);
     fill(0);
     text("Ah-Up!", screenWidth / 2, screenHeight / 2);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
+
 }
 
 function drawGameOver() {
@@ -78,7 +94,7 @@ function drawGameOver() {
 
 function drawPlaying() {
     textSize(24);
-    background("lightblue");
+    drawBackground( map(mic.getLevel(), 0,1, 2, 80) );
 
     stroke(255, 0, 0);
     strokeWeight(1);
