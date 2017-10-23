@@ -10,12 +10,4 @@ function Coin(x, y) {
         this.y += this.speed;
         return this.y >= screenHeight;
     };
-
-    this.checkCollision = function(obj) {
-        if (obj instanceof Rocket) {
-            return this.x <= obj.x + obj.width && this.x >= obj.x - obj.width &&
-                this.y <= obj.y + obj.height && this.y >= obj.y - obj.height;
-        }
-        return false;
-    }
 }

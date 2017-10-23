@@ -2,39 +2,42 @@
 var screenHeight = 600;
 var screenWidth = 400;
 
-var mic = new p5.AudioIn();
+var mic;
 var rocket;
-var obstacles = [];
-var coins = [];
+var obstacles;
+var coins;
 
-var rocketHeight = 0;
-var score = 0;
+var rocketHeight;
+var score;
 
 // 0 - start state
 // 1 - playing state
 // 2 - game over state
-var state = 1;
+var state = 0;
 
 function preload() {
 }
 
 function setup() {
+    mic = new p5.AudioIn();
     createCanvas(screenWidth, screenHeight);
     mic.start();
     strokeWeight(1);
 }
 
 function setupGame() {
+    rocketHeight = 0;
+    score = 0;
     rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic);
 
     obstacles = [];
     for (var i = 0; i < 3; i++) {
-        obstacles.push(new Obstacle(random(100, 400), 0, random(50, 100)));
+        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(50, 100)));
     }
 
     coins = [];
     for (i = 0; i < 3; i++) {
-        coins.push(new Coin(random(100, 400), 0));
+        coins.push(new Coin(random(100, 400), random(-100, 0)));
     }
 }
 
@@ -100,8 +103,8 @@ function drawPlaying() {
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
         }
-        if (e.checkCollision(rocket)) {
-            // state = 2;
+        if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
+            state = 2;
         }
     });
 
@@ -111,7 +114,7 @@ function drawPlaying() {
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
         }
-        if (e.checkCollision(rocket)) {
+        if (rocket.checkCollisionWithCircle(e.x, e.y)) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
@@ -120,7 +123,6 @@ function drawPlaying() {
     });
     rocketHeight += 1;
 
-    // micLevel = mic.getLevel();
     rocket.displayFlying();
 }
 
