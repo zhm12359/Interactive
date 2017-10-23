@@ -13,7 +13,7 @@ var score = 0;
 // 0 - start state
 // 1 - playing state
 // 2 - game over state
-var state = 0;
+var state = 1;
 
 function preload() {
 }
@@ -83,7 +83,7 @@ function drawPlaying() {
             e.speed = random(1, 5);
         }
         if (e.checkCollision(rocket)) {
-            state = 2;
+            // state = 2;
         }
     });
 

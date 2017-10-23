@@ -5,7 +5,6 @@ function Rocket(x, y, mic) {
     this.speed = 0;
     this.acceleration = 0;
     this.angle = 90;
-    this.height = 0;
     this.width = 70;
     this.height = 125;
     this.mic = mic;
@@ -18,7 +17,7 @@ function Rocket(x, y, mic) {
         // push();
         // translate(this.x, this.y);
         // rotate(radians(this.angle - 90));
-        image(this.fire ? this.rocketOn : this.rocketOff, this.x, this.y, 70, this.fire ? 125 : 100);
+        image(this.rocketOff, this.x, this.y, this.width, this.height);
 
         this.updateFlying(this.mic.getLevel());
 
@@ -53,6 +52,35 @@ function Rocket(x, y, mic) {
             // this.angle = constrain(this.angle, 10, 170);
             this.x = constrain(this.x + 5, 0, screenWidth);
         }
+
+        this.checkCollisionWithCircle(1,2);
     }
+
+    this.checkCollisionWithCircle = function(x, y){
+        fill(100,0,0,50);
+
+
+
+        triangle( this.x , this.y - this.height/2, //upper point
+                    this.x - this.width/2, this.y+28, //left point
+                    this.x+this.width/2, this.y+28);
+
+
+        var ret = pointInTriangle(this.x , this.y - this.height/2, this.x - this.width/2, this.y+28,this.x+this.width/2, this.y+28, x, y );
+        if(ret) text("Collision!!!!", 250, 250);
+        return ret;
+    }
+
+
+
+    function pointInTriangle(x1, y1, x2, y2, x3, y3, x, y)
+     {
+         var denominator = ((y2 - y3)*(x1 - x3) + (x3 - x2)*(y1 - y3));
+         var a = ((y2 - y3)*(x - x3) + (x3 - x2)*(y - y3)) / denominator;
+         var b = ((y3 - y1)*(x - x3) + (x1 - x3)*(y - y3)) / denominator;
+         var c = 1 - a - b;
+
+         return 0 <= a && a <= 1 && 0 <= b && b <= 1 && 0 <= c && c <= 1;
+     }
 
 }
