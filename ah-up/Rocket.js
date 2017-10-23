@@ -3,18 +3,27 @@ function Rocket(x, y, mic) {
     this.y = y;
     this.fire = false;
     this.speed = 0;
-    this.acceleration = 0;
-    this.angle = 90;
     this.width = 70;
     this.height = 125;
     this.mic = mic;
-
-    this.rocketOn = loadImage("images/rocket-on.png");
-    this.rocketOff = loadImage("images/rocket-off.png");
+    this.rocketImage = loadImage("images/rocket.png");
+    this.smokeParticles = [];
 
     this.displayFlying = function () {
         imageMode(CENTER);
-        image(this.rocketOff, this.x, this.y, this.width, this.height);
+        image(this.rocketImage, this.x, this.y, this.width, this.height);
+
+        if (this.fire) {
+            noStroke();
+            var x = random(this.x - 10, this.x + 10);
+            this.smokeParticles.push(new SmokeParticle(x, this.y + 50));
+        }
+
+        for (var i = 0; i < this.smokeParticles.length; i++) {
+            if (this.smokeParticles[i].display()) {
+                this.smokeParticles.splice(i, 1);
+            }
+        }
 
         fill(100, 0, 0, 50);
         triangle(this.x, this.y - this.height / 2, //upper point
@@ -22,15 +31,6 @@ function Rocket(x, y, mic) {
             this.x + this.width / 2, this.y + 28);
 
         this.updateFlying(this.mic.getLevel());
-
-        if (this.x < 0) this.x = screenWidth - this.x;
-        if (this.x > screenWidth) this.x -= screenWidth;
-
-    };
-
-    this.displayOff = function () {
-        imageMode(CORNER);
-        image(this.rocketOff, x, y, 35, 50);
     };
 
     this.updateFlying = function (micLevel) {
@@ -46,50 +46,53 @@ function Rocket(x, y, mic) {
 
         // comment this out in the final version
         if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-            // this.angle -= 10;
-            // this.angle = constrain(this.angle, 10, 170);
             this.y = constrain(this.y - 5, 0, screenHeight - 50);
+            this.fire = true;
+        } else {
+            this.fire = false;
         }
 
         if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-            // this.angle -= 10;
-            // this.angle = constrain(this.angle, 10, 170);
             this.y = constrain(this.y + 5, 0, screenHeight - 50);
         }
 
         if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-            // this.angle -= 10;
-            // this.angle = constrain(this.angle, 10, 170);
-            this.x = constrain(this.x - 5, 0, screenWidth);
+            this.x = constrain(this.x - 7, 0, screenWidth);
         }
 
         if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-            // this.angle += 10;
-            // this.angle = constrain(this.angle, 10, 170);
-            this.x = constrain(this.x + 5, 0, screenWidth);
+            this.x = constrain(this.x + 7, 0, screenWidth);
         }
-
-        this.checkCollisionWithCircle(1, 2);
     };
 
-    this.checkCollisionWithRectangle = function(x, y, width, height) {
+    this.checkCollisionWithRectangle = function (x, y, width, height) {
         var poly = [];
         poly[0] = createVector(this.x, this.y - this.height / 2);     // set X/Y position
         poly[1] = createVector(this.x - this.width / 2, this.y + 28);
         poly[2] = createVector(this.x + this.width / 2, this.y + 28);
-        return collideRectPoly(x,y,width,height,poly);
+        return collideRectPoly(x, y, width, height, poly);
     };
 
-    this.checkCollisionWithCircle = function (x, y) {
-        return pointInTriangle(this.x, this.y - this.height / 2, this.x - this.width / 2, this.y + 28, this.x + this.width / 2, this.y + 28, x, y);
+    this.checkCollisionWithCircle = function (x, y, diameter) {
+        var poly = [];
+        poly[0] = createVector(this.x, this.y - this.height / 2);     // set X/Y position
+        poly[1] = createVector(this.x - this.width / 2, this.y + 28);
+        poly[2] = createVector(this.x + this.width / 2, this.y + 28);
+        return collideCirclePoly(x, y, diameter, poly);
     };
+}
 
-    function pointInTriangle(x1, y1, x2, y2, x3, y3, x, y) {
-        var denominator = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
-        var a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / denominator;
-        var b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / denominator;
-        var c = 1 - a - b;
-        return 0 <= a && a <= 1 && 0 <= b && b <= 1 && 0 <= c && c <= 1;
+function SmokeParticle(x, y) {
+    this.x = x;
+    this.y = y;
+    this.speed = 5;
+    this.size = random(4, 10);
+    this.color = random(100, 200);
+
+    this.display = function() {
+        fill(this.color);
+        ellipse(this.x, this.y, this.size, this.size);
+        this.y += this.speed;
+        return this.y >= screenHeight;
     }
-
 }

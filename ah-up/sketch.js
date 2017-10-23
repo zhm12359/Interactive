@@ -22,7 +22,6 @@ function setup() {
     mic = new p5.AudioIn();
     createCanvas(screenWidth, screenHeight);
     mic.start();
-    strokeWeight(1);
 }
 
 function setupGame() {
@@ -82,11 +81,12 @@ function drawPlaying() {
     background("lightblue");
 
     stroke(255, 0, 0);
+    strokeWeight(1);
     textAlign(CENTER);
     fill(255, 0, 0);
-    text("DANGER", screenWidth / 2, screenHeight - 60);
+    text("DANGER!", screenWidth / 2, screenHeight - 60);
     line(0, screenHeight - 50, screenWidth, screenHeight - 50);
-    stroke(0);
+    strokeWeight(0);
 
     fill(0);
     textAlign(LEFT);
@@ -101,6 +101,7 @@ function drawPlaying() {
         if (e.display()) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
+            e.width = random(50, 100);
             e.speed = random(1, 5);
         }
         if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
@@ -113,11 +114,13 @@ function drawPlaying() {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
+            e.size = random(10, 20);
         }
-        if (rocket.checkCollisionWithCircle(e.x, e.y)) {
+        if (rocket.checkCollisionWithCircle(e.x, e.y, e.size)) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
+            e.size = random(10, 20);
             score++;
         }
     });
