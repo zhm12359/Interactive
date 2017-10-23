@@ -1,6 +1,6 @@
 // canvas width and height
-var screenHeight = 500;
-var screenWidth = 500;
+var screenHeight = 600;
+var screenWidth = 400;
 
 var mic = new p5.AudioIn();
 var rocket;
@@ -21,17 +21,21 @@ function preload() {
 function setup() {
     createCanvas(screenWidth, screenHeight);
     mic.start();
-    textSize(32);
+    strokeWeight(1);
+}
 
+function setupGame() {
     rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic);
 
+    obstacles = [];
     for (var i = 0; i < 3; i++) {
         obstacles.push(new Obstacle(random(100, 400), 0, random(50, 100)));
     }
+
+    coins = [];
     for (i = 0; i < 3; i++) {
         coins.push(new Coin(random(100, 400), 0));
     }
-
 }
 
 function draw() {
@@ -52,6 +56,8 @@ function drawStart() {
     background("lightblue");
     rectMode(CENTER);
     textAlign(CENTER);
+    textSize(36);
+    fill(0);
     text("Ah-Up!", screenWidth / 2, screenHeight / 2);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
 }
@@ -69,12 +75,24 @@ function drawGameOver() {
 }
 
 function drawPlaying() {
-    fill(0);
-    rectMode(CORNER);
-    textAlign(LEFT);
+    textSize(24);
     background("lightblue");
+
+    stroke(255, 0, 0);
+    textAlign(CENTER);
+    fill(255, 0, 0);
+    text("DANGER", screenWidth / 2, screenHeight - 60);
+    line(0, screenHeight - 50, screenWidth, screenHeight - 50);
+    stroke(0);
+
+    fill(0);
+    textAlign(LEFT);
     text("Height: " + rocketHeight, 50, 50);
     text("Score: " + score, 50, 100);
+
+    if (rocket.y >= screenHeight - 100) {
+        state = 2;
+    }
 
     obstacles.forEach(function (e) {
         if (e.display()) {
@@ -109,6 +127,7 @@ function drawPlaying() {
 function keyPressed() {
     if (state === 0) {
         if (keyCode === 83) {
+            setupGame();
             state = 1;
         }
     } else if (state === 2) {
