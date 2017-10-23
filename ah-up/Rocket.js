@@ -1,32 +1,64 @@
-function Rocket(x,y){
+function Rocket(x, y) {
     this.x = x;
     this.y = y;
     this.fire = false;
+    this.speed = 0;
+    this.acceleration = 0;
+    this.angle = 90;
+    this.height = 0;
+    this.width = 70;
+    this.height = 125;
 
-    this.displayFlying = function(){
+    this.rocketOn = loadImage("images/rocket-on.png");
+    this.rocketOff = loadImage("images/rocket-off.png");
 
-        imageMode(CORNER);
-        image(this.fire? rocketOn : rocketOff, this.x, this.y, 70, this.fire? 125:100);
-        rocket.fire = !rocket.fire;
-    };
+    this.displayFlying = function () {
+        imageMode(CENTER);
+        // push();
+        // translate(this.x, this.y);
+        // rotate(radians(this.angle - 90));
+        image(this.fire ? this.rocketOn : this.rocketOff, this.x, this.y, 70, this.fire ? 125 : 100);
+        // pop();
 
-    this.displayOff = function(){
-        imageMode(CORNER);
-        image(rocketOff, x, y, 70, 100);
-    };
+        // this.rocket.fire = !this.rocket.fire;
 
-    this.updateFlying = function(micLevel) {
-
-        if(this.y > 100 )this.y = this.y - micLevel*100;
-        if(this.y < height - 100) this.y += 3;
-
-        if (keyIsDown(LEFT_ARROW) || keyIsDown(65) ) {
-            if(this.x>0) this.x -= 3;
+        if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+            // this.angle -= 10;
+            // this.angle = constrain(this.angle, 10, 170);
+            this.y = constrain(this.y - 5, 0, screenHeight);
         }
 
-        if (keyIsDown(RIGHT_ARROW) || keyIsDown(68) && bottombar.x<600-75) {
-            if(this.x<width-70) this.x += 3;
+        if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+            // this.angle -= 10;
+            // this.angle = constrain(this.angle, 10, 170);
+            this.y = constrain(this.y + 5, 0, screenHeight);
         }
+
+        if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+            // this.angle -= 10;
+            // this.angle = constrain(this.angle, 10, 170);
+            this.x = constrain(this.x - 5, 0, screenWidth);
+        }
+
+        if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+            // this.angle += 10;
+            // this.angle = constrain(this.angle, 10, 170);
+            this.x = constrain(this.x + 5, 0, screenWidth);
+        }
+
+        // this.acceleration = constrain(this.acceleration, 0, 10);
+        // this.speed += this.acceleration;
+        // this.y += sin(this.angle) * this.speed;
+        // this.x += cos(this.angle) * this.speed;
+
+        if (this.x < 0) this.x = screenWidth - this.x;
+        if (this.x > screenWidth) this.x -= screenWidth;
+
+    };
+
+    this.displayOff = function () {
+        imageMode(CORNER);
+        image(this.rocketOff, x, y, 35, 50);
     };
 
 }
