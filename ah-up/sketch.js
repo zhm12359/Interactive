@@ -18,7 +18,7 @@ function setup() {
     mic.start();
     textSize(32);
 
-    rocket = new Rocket(screenWidth / 2, screenHeight / 2);
+    rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic);
 
     for (var i = 0; i < 3; i++) {
         obstacles.push(new Obstacle(random(100, 400), 0, random(50, 100)));

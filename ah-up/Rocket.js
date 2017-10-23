@@ -1,4 +1,4 @@
-function Rocket(x, y) {
+function Rocket(x, y, mic) {
     this.x = x;
     this.y = y;
     this.fire = false;
@@ -8,6 +8,7 @@ function Rocket(x, y) {
     this.height = 0;
     this.width = 70;
     this.height = 125;
+    this.mic = mic;
 
     this.rocketOn = loadImage("images/rocket-on.png");
     this.rocketOff = loadImage("images/rocket-off.png");
@@ -22,17 +23,19 @@ function Rocket(x, y) {
 
         // this.rocket.fire = !this.rocket.fire;
 
-        if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-            // this.angle -= 10;
-            // this.angle = constrain(this.angle, 10, 170);
-            this.y = constrain(this.y - 5, 0, screenHeight);
-        }
+        // if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+        //     // this.angle -= 10;
+        //     // this.angle = constrain(this.angle, 10, 170);
+        //     this.y = constrain(this.y - 5, 0, screenHeight);
+        // }
+        //
+        // if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+        //     // this.angle -= 10;
+        //     // this.angle = constrain(this.angle, 10, 170);
+        //     this.y = constrain(this.y + 5, 0, screenHeight);
+        // }
 
-        if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-            // this.angle -= 10;
-            // this.angle = constrain(this.angle, 10, 170);
-            this.y = constrain(this.y + 5, 0, screenHeight);
-        }
+
 
         if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
             // this.angle -= 10;
