@@ -35,7 +35,7 @@ function setupGame() {
 
     obstacles = [];
     for (var i = 0; i < 3; i++) {
-        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(50, 100)));
+        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60)));
     }
 
     coins = [];
@@ -117,7 +117,7 @@ function drawPlaying() {
         if (e.display()) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
-            e.width = random(50, 100);
+            e.width = random(30, 60);
             e.speed = random(1, 5);
         }
         if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
@@ -130,13 +130,13 @@ function drawPlaying() {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
-            e.size = random(10, 20);
+            e.size = random(30, 60);
         }
         if (rocket.checkCollisionWithCircle(e.x, e.y, e.size)) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.speed = random(1, 5);
-            e.size = random(10, 20);
+            e.size = random(30, 60);
             score++;
         }
     });

@@ -3,8 +3,8 @@ function Rocket(x, y, mic) {
     this.y = y;
     this.fire = false;
     this.speed = 0;
-    this.width = 70;
-    this.height = 125;
+    this.width = 46;
+    this.height = 83;
     this.mic = mic;
     this.rocketImage = loadImage("images/rocket.png");
     this.smokeParticles = [];
