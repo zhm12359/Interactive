@@ -19,16 +19,17 @@ var bgy = -10000;
 var state = 0;
 
 function preload() {
+    bgImage = loadImage("images/sky.png");
 }
 
 function setup() {
     mic = new p5.AudioIn();
     createCanvas(screenWidth, screenHeight);
     mic.start();
-    bgImage = loadImage("images/sky.png");
 }
 
 function setupGame() {
+    bgy = -10000;
     rocketHeight = 0;
     score = 0;
     rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic);
@@ -46,7 +47,6 @@ function setupGame() {
 }
 
 function draw() {
-
     switch (state) {
         case 0:
             drawStart();
@@ -60,70 +60,51 @@ function draw() {
     }
 }
 
-function drawBackground(acc){
+function drawBackground(acc) {
+    background(255);
     imageMode(CENTER);
-    image(bgImage, screenWidth/2, bgy, 400, 20611  );
-    bgy +=acc;
-    if(bgy>=16000) bgy = -10000;
+    image(bgImage, screenWidth / 2, bgy, 400, 20611);
+    bgy += acc;
+    if (bgy >= 16000) bgy = -10000;
 }
 
 function drawStart() {
-    bgy=-10000;
-    imageMode(CENTER);
-    image(bgImage, screenWidth/2, bgy, 400, 20611  );
-    rectMode(CENTER);
+    background(255);
     textAlign(CENTER);
     textSize(36);
     fill(0);
     text("Ah-Up!", screenWidth / 2, screenHeight / 2);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
-
+    noLoop();
 }
 
 function drawGameOver() {
-    background("lightblue");
     rectMode(CENTER);
     textAlign(CENTER);
-    textSize(24);
+    textSize(20);
     fill(0);
     text("Game Over!", screenWidth / 2, screenHeight / 2);
     text("You reached a max height of " + rocketHeight + "\nand collected " + score + " coins along the way!",
         screenWidth / 2, screenHeight / 2 + 50);
     text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 150);
+    noLoop();
 }
 
 function drawPlaying() {
     textSize(24);
-    drawBackground( map(mic.getLevel(), 0,1, 2, 80) );
+    drawBackground(map(mic.getLevel(), 0, 1, 2, 80));
 
     stroke(255, 0, 0);
     strokeWeight(1);
     textAlign(CENTER);
     fill(255, 0, 0);
-    text("DANGER!", screenWidth / 2, screenHeight - 60);
-    line(0, screenHeight - 50, screenWidth, screenHeight - 50);
+    text("DANGER!", screenWidth / 2, screenHeight - 100);
+    line(0, screenHeight - 83, screenWidth, screenHeight - 83);
     strokeWeight(0);
 
-    fill(0);
-    textAlign(LEFT);
-    text("Height: " + rocketHeight, 50, 50);
-    text("Score: " + score, 50, 100);
-
-    if (rocket.y >= screenHeight - 100) {
+    if (rocket.y >= screenHeight - 125) {
         state = 2;
     }
-
-    obstacles.forEach(function (e) {
-        if (e.display()) {
-            e.y = random(0, -100);
-            e.x = random(0, screenWidth);
-            e.width = random(30, 60);
-            e.speed = random(1, 5);
-        }
-        if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
-            state = 2;
-        }
-    });
 
     coins.forEach(function (e) {
         if (e.display()) {
@@ -140,6 +121,24 @@ function drawPlaying() {
             score++;
         }
     });
+
+    obstacles.forEach(function (e) {
+        if (e.display()) {
+            e.y = random(0, -100);
+            e.x = random(0, screenWidth);
+            e.width = random(30, 60);
+            e.speed = random(1, 5);
+        }
+        if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
+            state = 2;
+        }
+    });
+
+    fill(0);
+    textAlign(LEFT);
+    text("Height: " + rocketHeight, 50, 50);
+    text("Score: " + score, 50, 100);
+
     rocketHeight += 1;
 
     rocket.displayFlying();
@@ -150,10 +149,12 @@ function keyPressed() {
         if (keyCode === 83) {
             setupGame();
             state = 1;
+            loop();
         }
     } else if (state === 2) {
         if (keyCode === 82) {
             state = 0;
+            loop();
         }
     }
 }

@@ -16,7 +16,7 @@ function Rocket(x, y, mic) {
         if (this.fire) {
             noStroke();
             var x = random(this.x - 10, this.x + 10);
-            this.smokeParticles.push(new SmokeParticle(x, this.y + 50));
+            this.smokeParticles.push(new SmokeParticle(x, this.y + 40));
         }
 
         for (var i = 0; i < this.smokeParticles.length; i++) {
@@ -38,19 +38,25 @@ function Rocket(x, y, mic) {
         var level = map(micLevel, 0, 1, 0, 100);
 
         if (level > 10) { //filter out bg noise
-            if (this.y > 100) this.y = this.y - micLevel * 50;
+            if (this.y > 100) {
+                this.y = this.y - micLevel * 50;
+                this.fire = true;
+            }
+        } else {
+            this.fire = false;
         }
+
         if (this.y < height - 100) {
             this.y += 3;
         }
 
-        // comment this out in the final version
-        if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-            this.y = constrain(this.y - 5, 0, screenHeight - 50);
-            this.fire = true;
-        } else {
-            this.fire = false;
-        }
+        // make sure this is commented out in the final version
+        // if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+        //     this.y = constrain(this.y - 5, 0, screenHeight - 50);
+        //     this.fire = true;
+        // } else {
+        //     this.fire = false;
+        // }
 
         if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
             this.y = constrain(this.y + 5, 0, screenHeight - 50);
@@ -87,10 +93,11 @@ function SmokeParticle(x, y) {
     this.y = y;
     this.speed = 5;
     this.size = random(4, 10);
-    this.color = random(100, 200);
+    this.other = random(80, 120);
+    this.red = random(this.other, 255);
 
     this.display = function() {
-        fill(this.color);
+        fill(this.red, this.other, this.other);
         ellipse(this.x, this.y, this.size, this.size);
         this.y += this.speed;
         return this.y >= screenHeight;
