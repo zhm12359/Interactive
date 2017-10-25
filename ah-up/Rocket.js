@@ -54,8 +54,6 @@ function Rocket(x, y, mic) {
         if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
             this.y = constrain(this.y - 5, 0, screenHeight - 50);
             this.fire = true;
-        } else {
-            this.fire = false;
         }
 
         if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {

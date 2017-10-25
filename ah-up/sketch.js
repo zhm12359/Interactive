@@ -13,6 +13,8 @@ var score;
 var bgImage;
 var bgy = -10000;
 
+var comets = [];
+
 // 0 - start state
 // 1 - playing state
 // 2 - game over state
@@ -26,6 +28,9 @@ function setup() {
     mic = new p5.AudioIn();
     createCanvas(screenWidth, screenHeight);
     mic.start();
+    comets.push(loadImage("images/comet-blue.png"));
+    comets.push(loadImage("images/comet-red.png"));
+    comets.push(loadImage("images/comet-orange.png"));
 }
 
 function setupGame() {
@@ -36,7 +41,7 @@ function setupGame() {
 
     obstacles = [];
     for (var i = 0; i < 3; i++) {
-        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60)));
+        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[ int(random(0,2)) ] ));
     }
 
     coins = [];
@@ -129,7 +134,7 @@ function drawPlaying() {
             e.width = random(30, 60);
             e.speed = random(1, 5);
         }
-        if (rocket.checkCollisionWithRectangle(e.x, e.y, e.width, e.height)) {
+        if (rocket.checkCollisionWithCircle(e.x, e.y+e.height/3.5, e.width/1.2)) {
             state = 2;
         }
     });
