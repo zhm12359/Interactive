@@ -15,5 +15,5 @@ function Obstacle(x, y, width, comet) {
         return this.y >= screenHeight;
 
     };
-    
+
 }
