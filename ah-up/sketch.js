@@ -97,15 +97,9 @@ function drawGameOver() {
 
 function drawPlaying() {
     textSize(24);
-    drawBackground(map(mic.getLevel(), 0, 1, 2, 80));
 
-    stroke(255, 0, 0);
-    strokeWeight(1);
-    textAlign(CENTER);
-    fill(255, 0, 0);
-    text("DANGER!", screenWidth / 2, screenHeight - 100);
-    line(0, screenHeight - 83, screenWidth, screenHeight - 83);
-    strokeWeight(0);
+    var micLevel = mic.getLevel();
+    drawBackground(map(micLevel, 0, 1, 2, 80));
 
     if (rocket.y >= screenHeight - rocket.height) {
         state = 2;
@@ -147,6 +141,16 @@ function drawPlaying() {
     rocketHeight += 1;
 
     rocket.displayFlying();
+
+    drawEnergyBar(micLevel);
+
+    stroke(255, 0, 0);
+    strokeWeight(1);
+    textAlign(CENTER);
+    fill(255, 0, 0);
+    text("DANGER!", screenWidth / 2, screenHeight - 100);
+    line(0, screenHeight - 83, screenWidth, screenHeight - 83);
+    strokeWeight(0);
 }
 
 function keyPressed() {
@@ -162,4 +166,30 @@ function keyPressed() {
             loop();
         }
     }
+}
+
+function drawEnergyBar(micLevel) {
+
+    var red = 0;
+    var green = 0;
+
+    rectMode(CORNER);
+    fill(200, 200, 200, 80);
+    strokeWeight(1);
+    stroke(0);
+    rect(width - 40, height - 300, 30, 200);
+    fill(0);
+    var h = map(micLevel, 0, 1, 0, 200);
+    if (h < 100) {
+        red = 255;
+        green = map(h, 0, 100, 0, 255);
+    } else {
+        red = map(h, 0, 100, 0, 255);
+        green = 255;
+    }
+
+    noStroke();
+    fill(red, green, 0, 80);
+    rect(width - 38, height - 300 + (200 - h), 26, h);
+
 }
