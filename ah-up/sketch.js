@@ -127,17 +127,25 @@ function drawPlaying() {
         }
     });
 
-    obstacles.forEach(function (e) {
+
+    for(var i=0; i<obstacles.length; i++){
+        var e = obstacles[i];
         if (e.display()) {
             e.y = random(0, -100);
             e.x = random(0, screenWidth);
             e.width = random(30, 60);
             e.speed = random(1, 5);
+            obstacles.splice(i, 1);
+            i--;
+            obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[ int(random(0,2)) ] ));
+
         }
         if (rocket.checkCollisionWithCircle(e.x, e.y+e.height/3.5, e.width/1.2)) {
             state = 2;
         }
-    });
+    }
+
+
 
     fill(0);
     textAlign(LEFT);
