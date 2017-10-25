@@ -46,7 +46,7 @@ function Rocket(x, y, mic) {
             this.fire = false;
         }
 
-        if (this.y < height - 100) {
+        if (this.y < height) {
             this.y += 3;
         }
 
