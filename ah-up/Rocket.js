@@ -50,13 +50,13 @@ function Rocket(x, y, mic) {
             this.y += 3;
         }
 
-        // make sure this is commented out in the final version
-        // if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-        //     this.y = constrain(this.y - 5, 0, screenHeight - 50);
-        //     this.fire = true;
-        // } else {
-        //     this.fire = false;
-        // }
+        //make sure this is commented out in the final version
+        if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+            this.y = constrain(this.y - 5, 0, screenHeight - 50);
+            this.fire = true;
+        } else {
+            this.fire = false;
+        }
 
         if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
             this.y = constrain(this.y + 5, 0, screenHeight - 50);
