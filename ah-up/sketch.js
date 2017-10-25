@@ -141,10 +141,13 @@ function drawPlaying() {
 
 
 
-    fill(0);
+    fill(150,200, 255, 90);
+    rect(0,0, 150, 70);
+    fill(200, 200, 200);
     textAlign(LEFT);
-    text("Height: " + rocketHeight, 50, 50);
-    text("Score: " + score, 50, 100);
+    textSize(20);
+    text("Height: " + rocketHeight, 10, 30);
+    text("Score: " + score, 10, 50);
 
     rocketHeight += 1;
 
