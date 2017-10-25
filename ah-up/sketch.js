@@ -107,7 +107,7 @@ function drawPlaying() {
     line(0, screenHeight - 83, screenWidth, screenHeight - 83);
     strokeWeight(0);
 
-    if (rocket.y >= screenHeight - 125) {
+    if (rocket.y >= screenHeight - rocket.height) {
         state = 2;
     }
 
