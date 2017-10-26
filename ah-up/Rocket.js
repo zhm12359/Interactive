@@ -16,7 +16,7 @@ function Rocket(x, y, mic, rocketImage) {
         if (this.fire) {
             noStroke();
             var x = random(this.x - 10, this.x + 10);
-            this.smokeParticles.push(new SmokeParticle(x, this.y + 40));
+            this.smokeParticles.push(new SmokeParticle(x, this.y + 40, 1));
         }
 
         for (var i = 0; i < this.smokeParticles.length; i++) {
@@ -88,18 +88,18 @@ function Rocket(x, y, mic, rocketImage) {
     };
 }
 
-function SmokeParticle(x, y) {
+function SmokeParticle(x, y, direction) {
     this.x = x;
     this.y = y;
-    this.speed = 5;
+    this.speed = 5 * direction;
     this.size = random(10, 30);
     this.color = random(0, 200);
     this.opacity = random(20, 80);
 
     this.display = function () {
-        fill(this.color, this.color, this.color, this.opacity);
+        fill(this.color, this.color, this.color, this.opacity--);
         ellipse(this.x, this.y, this.size, this.size);
         this.y += this.speed;
-        return this.y >= screenHeight;
+        return this.y >= screenHeight || this.y <= 0 || this.opacity === 0;
     }
 }

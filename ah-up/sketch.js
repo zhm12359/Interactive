@@ -6,6 +6,7 @@ var mic;
 var rocket;
 var obstacles;
 var coins;
+var smoke;
 
 var rocketHeight;
 var score;
@@ -52,6 +53,7 @@ function setupGame() {
         coins.push(new Coin(random(100, 400), random(-100, 0)));
     }
 
+    smoke = [];
 }
 
 function draw() {
@@ -106,7 +108,7 @@ function drawGameOver() {
 
     for (var c = 0; c < coins.length; c++) {
         var coin = coins[c];
-        if (coin.display(state)) {
+        if (coin.display()) {
             coins.splice(c, 1);
             c--;
             coins.push(new Coin(random(100, 400), random(-100, 0)));
@@ -115,7 +117,7 @@ function drawGameOver() {
 
     for (var i = 0; i < obstacles.length; i++) {
         var e = obstacles[i];
-        if (e.display(state)) {
+        if (e.display()) {
             obstacles.splice(i, 1);
             i--;
             obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
@@ -153,6 +155,16 @@ function drawGameOverScreen() {
     text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 100);
     textStyle(NORMAL);
 
+    var x = random(rocket.x, rocket.x + 8);
+    smoke.push(new SmokeParticle(x, screenHeight - 100, -1));
+    for (var s = 0; s < smoke.length; s++) {
+        var sm = smoke[s];
+        if (sm.display()) {
+            smoke.splice(s, 1);
+            s--;
+        }
+    }
+
     push();
     translate(rocket.x, screenHeight - 100);
     rotate(radians(200));
@@ -181,7 +193,7 @@ function drawPlaying() {
             coins.push(new Coin(random(100, 400), random(-100, 0)));
             score++;
         }
-        if (coin.display(state)) {
+        if (coin.display()) {
             coins.splice(c, 1);
             c--;
             coins.push(new Coin(random(100, 400), random(-100, 0)));
@@ -193,7 +205,7 @@ function drawPlaying() {
         if (rocket.checkCollisionWithCircle(e.x, e.y + e.height / 3.5, e.width / 1.2)) {
             state = 2;
         }
-        if (e.display(state)) {
+        if (e.display()) {
             obstacles.splice(i, 1);
             i--;
             obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
