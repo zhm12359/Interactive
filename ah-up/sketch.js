@@ -17,7 +17,8 @@ var comets = [];
 
 // 0 - start state
 // 1 - playing state
-// 2 - game over state
+// 2 - game over animation
+// 3 - game over screen
 var state = 0;
 
 function preload() {
@@ -41,7 +42,7 @@ function setupGame() {
 
     obstacles = [];
     for (var i = 0; i < 3; i++) {
-        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[ int(random(0,2)) ] ));
+        obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
     }
 
     coins = [];
@@ -62,6 +63,9 @@ function draw() {
         case 2:
             drawGameOver();
             break;
+        case 3:
+            drawGameOverScreen();
+            break;
     }
 }
 
@@ -80,19 +84,58 @@ function drawStart() {
     fill(0);
     text("Ah-Up!", screenWidth / 2, screenHeight / 2);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
-    noLoop();
 }
 
+var rot = 0;
+
 function drawGameOver() {
+    drawBackground(0);
+    rocket.fire = false;
+
+    for (var c = 0; c < coins.length; c++) {
+        var coin = coins[c];
+        if (coin.display(state)) {
+            coins.splice(c, 1);
+            c--;
+            coins.push(new Coin(random(100, 400), random(-100, 0)));
+        }
+    }
+
+    for (var i = 0; i < obstacles.length; i++) {
+        var e = obstacles[i];
+        if (e.display(state)) {
+            obstacles.splice(i, 1);
+            i--;
+            obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
+        }
+    }
+
+    push();
+    translate(rocket.x, rocket.y);
+    rotate(radians(rot));
+    image(rocket.rocketImage, 0, 0, rocket.width, rocket.height);
+    pop();
+
+    rot += 5;
+    if (rot >= 360) rot -= 360;
+    rocket.y += 3;
+
+    if (rocket.y >= screenHeight) {
+        state = 3;
+    }
+
+}
+
+function drawGameOverScreen() {
+    background(255);
     rectMode(CENTER);
     textAlign(CENTER);
     textSize(20);
     fill(0);
-    text("Game Over!", screenWidth / 2, screenHeight / 2);
+    text("Game Over!", screenWidth / 2, screenHeight / 2 - 50);
     text("You reached a max height of " + rocketHeight + "\nand collected " + score + " coins along the way!",
-        screenWidth / 2, screenHeight / 2 + 50);
-    text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 150);
-    noLoop();
+        screenWidth / 2, screenHeight / 2);
+    text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 100);
 }
 
 function drawPlaying() {
@@ -105,44 +148,35 @@ function drawPlaying() {
         state = 2;
     }
 
-    coins.forEach(function (e) {
-        if (e.display()) {
-            e.y = random(0, -100);
-            e.x = random(0, screenWidth);
-            e.speed = random(1, 5);
-            e.size = random(30, 60);
+    for (var c = 0; c < coins.length; c++) {
+        var coin = coins[c];
+        if (coin.display(state)) {
+            coins.splice(c, 1);
+            c--;
+            coins.push(new Coin(random(100, 400), random(-100, 0)));
         }
-        if (rocket.checkCollisionWithCircle(e.x, e.y, e.size)) {
-            e.y = random(0, -100);
-            e.x = random(0, screenWidth);
-            e.speed = random(1, 5);
-            e.size = random(30, 60);
+        if (rocket.checkCollisionWithCircle(coin.x, coin.y, coin.size)) {
+            coins.splice(c, 1);
+            c--;
+            coins.push(new Coin(random(100, 400), random(-100, 0)));
             score++;
         }
-    });
+    }
 
-
-    for(var i=0; i<obstacles.length; i++){
+    for (var i = 0; i < obstacles.length; i++) {
         var e = obstacles[i];
-        if (e.display()) {
-            e.y = random(0, -100);
-            e.x = random(0, screenWidth);
-            e.width = random(30, 60);
-            e.speed = random(1, 5);
+        if (e.display(state)) {
             obstacles.splice(i, 1);
             i--;
-            obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[ int(random(0,2)) ] ));
-
+            obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
         }
-        if (rocket.checkCollisionWithCircle(e.x, e.y+e.height/3.5, e.width/1.2)) {
+        if (rocket.checkCollisionWithCircle(e.x, e.y + e.height / 3.5, e.width / 1.2)) {
             state = 2;
         }
     }
 
-
-
-    fill(150,200, 255, 90);
-    rect(0,0, 150, 70);
+    fill(150, 200, 255, 90);
+    rect(0, 0, 150, 70);
     fill(200, 200, 200);
     textAlign(LEFT);
     textSize(20);
@@ -151,7 +185,7 @@ function drawPlaying() {
 
     rocketHeight += 1;
 
-    rocket.displayFlying();
+    rocket.displayFlying(state);
 
     drawEnergyBar(micLevel);
 
@@ -169,12 +203,10 @@ function keyPressed() {
         if (keyCode === 83) {
             setupGame();
             state = 1;
-            loop();
         }
-    } else if (state === 2) {
+    } else if (state === 3) {
         if (keyCode === 82) {
             state = 0;
-            loop();
         }
     }
 }

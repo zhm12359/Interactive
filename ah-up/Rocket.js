@@ -9,7 +9,7 @@ function Rocket(x, y, mic) {
     this.rocketImage = loadImage("images/rocket.png");
     this.smokeParticles = [];
 
-    this.displayFlying = function () {
+    this.displayFlying = function (state) {
         imageMode(CENTER);
         image(this.rocketImage, this.x, this.y, this.width, this.height);
 
@@ -30,7 +30,8 @@ function Rocket(x, y, mic) {
             this.x - this.width / 2, this.y + 28, //left point
             this.x + this.width / 2, this.y + 28);
 
-        this.updateFlying(this.mic.getLevel());
+        if (state === 1) this.updateFlying(this.mic.getLevel());
+        else this.y += 3;
     };
 
     this.updateFlying = function (micLevel) {
