@@ -1,4 +1,4 @@
-function Rocket(x, y, mic) {
+function Rocket(x, y, mic, rocketImage) {
     this.x = x;
     this.y = y;
     this.fire = false;
@@ -6,7 +6,7 @@ function Rocket(x, y, mic) {
     this.width = 46;
     this.height = 83;
     this.mic = mic;
-    this.rocketImage = loadImage("images/rocket.png");
+    this.rocketImage = rocketImage;
     this.smokeParticles = [];
 
     this.displayFlying = function (state) {
@@ -26,6 +26,7 @@ function Rocket(x, y, mic) {
         }
 
         fill(100, 0, 0, 50);
+        // probably should comment this out in the final version as well
         triangle(this.x, this.y - this.height / 2, //upper point
             this.x - this.width / 2, this.y + 28, //left point
             this.x + this.width / 2, this.y + 28);
@@ -91,12 +92,12 @@ function SmokeParticle(x, y) {
     this.x = x;
     this.y = y;
     this.speed = 5;
-    this.size = random(4, 10);
-    this.other = random(80, 120);
-    this.red = random(this.other, 255);
+    this.size = random(10, 30);
+    this.color = random(0, 200);
+    this.opacity = random(20, 80);
 
-    this.display = function() {
-        fill(this.red, this.other, this.other);
+    this.display = function () {
+        fill(this.color, this.color, this.color, this.opacity);
         ellipse(this.x, this.y, this.size, this.size);
         this.y += this.speed;
         return this.y >= screenHeight;

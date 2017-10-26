@@ -9,6 +9,7 @@ var coins;
 
 var rocketHeight;
 var score;
+var rocketImage;
 
 var bgImage;
 var bgy = -10000;
@@ -23,6 +24,7 @@ var state = 0;
 
 function preload() {
     bgImage = loadImage("images/sky.png");
+    rocketImage = loadImage("images/rocket.png");
 }
 
 function setup() {
@@ -38,7 +40,7 @@ function setupGame() {
     bgy = -10000;
     rocketHeight = 0;
     score = 0;
-    rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic);
+    rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic, rocketImage);
 
     obstacles = [];
     for (var i = 0; i < 3; i++) {
@@ -78,12 +80,22 @@ function drawBackground(acc) {
 }
 
 function drawStart() {
-    background(255);
+    background(250);
+
+    push();
+    translate(screenWidth - 90, screenHeight / 2 - 110);
+    rotate(radians(30));
+    image(rocketImage, 0, 0, 50, 100);
+    pop();
+
     textAlign(CENTER);
     textSize(36);
     fill(0);
-    text("Ah-Up!", screenWidth / 2, screenHeight / 2);
+    textStyle(BOLD);
+    text("Ah-Up!", screenWidth / 2, screenHeight / 2 - 40);
+    fill(100);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
+    textStyle(NORMAL);
 }
 
 var rot = 0;
@@ -127,15 +139,28 @@ function drawGameOver() {
 }
 
 function drawGameOverScreen() {
-    background(255);
+    background(250);
     rectMode(CENTER);
     textAlign(CENTER);
-    textSize(20);
+    textSize(30);
     fill(0);
+    textStyle(BOLD);
     text("Game Over!", screenWidth / 2, screenHeight / 2 - 50);
+    fill(100);
+    textSize(20);
     text("You reached a max height of " + rocketHeight + "\nand collected " + score + " coins along the way!",
         screenWidth / 2, screenHeight / 2);
     text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 100);
+    textStyle(NORMAL);
+
+    push();
+    translate(rocket.x, screenHeight - 100);
+    rotate(radians(200));
+    image(rocketImage, 0, 0, 50, 100);
+    pop();
+    rectMode(CORNER);
+    fill(14, 89, 1);
+    rect(0, screenHeight - 70, screenWidth, 70);
 }
 
 function drawPlaying() {
@@ -150,36 +175,41 @@ function drawPlaying() {
 
     for (var c = 0; c < coins.length; c++) {
         var coin = coins[c];
-        if (coin.display(state)) {
-            coins.splice(c, 1);
-            c--;
-            coins.push(new Coin(random(100, 400), random(-100, 0)));
-        }
         if (rocket.checkCollisionWithCircle(coin.x, coin.y, coin.size)) {
             coins.splice(c, 1);
             c--;
             coins.push(new Coin(random(100, 400), random(-100, 0)));
             score++;
         }
+        if (coin.display(state)) {
+            coins.splice(c, 1);
+            c--;
+            coins.push(new Coin(random(100, 400), random(-100, 0)));
+        }
     }
 
     for (var i = 0; i < obstacles.length; i++) {
         var e = obstacles[i];
+        if (rocket.checkCollisionWithCircle(e.x, e.y + e.height / 3.5, e.width / 1.2)) {
+            state = 2;
+        }
         if (e.display(state)) {
             obstacles.splice(i, 1);
             i--;
             obstacles.push(new Obstacle(random(100, 400), random(-100, 0), random(30, 60), comets[int(random(0, 2))]));
         }
-        if (rocket.checkCollisionWithCircle(e.x, e.y + e.height / 3.5, e.width / 1.2)) {
-            state = 2;
-        }
     }
 
-    fill(150, 200, 255, 90);
-    rect(0, 0, 150, 70);
+    // fill(150, 200, 255, 90);
+    strokeWeight(1);
+    stroke(0);
+    fill(250);
+    rect(0, 0, 150, 60);
+    noStroke();
     fill(200, 200, 200);
     textAlign(LEFT);
     textSize(20);
+    fill(0);
     text("Height: " + rocketHeight, 10, 30);
     text("Score: " + score, 10, 50);
 

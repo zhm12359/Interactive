@@ -7,12 +7,11 @@ function Obstacle(x, y, width, comet) {
 
     this.comet = comet;
 
-    this.display = function(state) {
+    this.display = function (state) {
         fill(0);
         imageMode(CENTER);
         image(this.comet, this.x, this.y, this.width, this.height);
         if (state === 1) this.y += this.speed;
         return this.y >= screenHeight;
     };
-
 }
