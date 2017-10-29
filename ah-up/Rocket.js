@@ -27,9 +27,9 @@ function Rocket(x, y, mic, rocketImage) {
 
         fill(100, 0, 0, 50);
         // probably should comment this out in the final version as well
-        triangle(this.x, this.y - this.height / 2, //upper point
-            this.x - this.width / 2, this.y + 28, //left point
-            this.x + this.width / 2, this.y + 28);
+        // triangle(this.x, this.y - this.height / 2, //upper point
+        //     this.x - this.width / 2, this.y + 28, //left point
+        //     this.x + this.width / 2, this.y + 28);
 
         if (state === 1) this.updateFlying(this.mic.getLevel());
         else this.y += 3;
