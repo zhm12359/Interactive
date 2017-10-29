@@ -13,7 +13,7 @@ var score;
 var rocketImage;
 
 var bgImage;
-var bgy = -10000;
+var bgy = -7500;
 
 var comets = [];
 
@@ -26,6 +26,7 @@ var state = 0;
 function preload() {
     bgImage = loadImage("images/sky.png");
     rocketImage = loadImage("images/rocket.png");
+    landImage = loadImage("images/land.png")
 }
 
 function setup() {
@@ -35,10 +36,11 @@ function setup() {
     comets.push(loadImage("images/comet-blue.png"));
     comets.push(loadImage("images/comet-red.png"));
     comets.push(loadImage("images/comet-orange.png"));
+    noStroke();
 }
 
 function setupGame() {
-    bgy = -10000;
+    bgy = -7500;
     rocketHeight = 0;
     score = 0;
     rocket = new Rocket(screenWidth / 2, screenHeight / 2, mic, rocketImage);
@@ -82,7 +84,12 @@ function drawBackground(acc) {
 }
 
 function drawStart() {
-    background(250);
+    imageMode(CORNER);
+    background(188,236,254, 50);
+    drawCloud(20, 30);
+    drawCloud(100, 90);
+    drawCloud(300, 50);
+    drawCloud(400, 100);
 
     push();
     translate(screenWidth - 90, screenHeight / 2 - 110);
@@ -98,6 +105,8 @@ function drawStart() {
     fill(100);
     text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
     textStyle(NORMAL);
+
+    image(landImage, 0, screenHeight-200, screenWidth,200);
 }
 
 var rot = 0;
@@ -141,7 +150,13 @@ function drawGameOver() {
 }
 
 function drawGameOverScreen() {
-    background(250);
+    imageMode(CORNER);
+    background(188,236,254, 50);
+    drawCloud(20, 30);
+    drawCloud(100, 90);
+    drawCloud(300, 50);
+    drawCloud(400, 100)
+
     rectMode(CENTER);
     textAlign(CENTER);
     textSize(30);
@@ -155,8 +170,8 @@ function drawGameOverScreen() {
     text("Press 'R' to Restart!", screenWidth / 2, screenHeight / 2 + 100);
     textStyle(NORMAL);
 
-    var x = random(rocket.x, rocket.x + 8);
-    smoke.push(new SmokeParticle(x, screenHeight - 100, -1));
+    var x = random(rocket.x-18, rocket.x-6);
+    smoke.push(new SmokeParticle(x, screenHeight - 125, -1));
     for (var s = 0; s < smoke.length; s++) {
         var sm = smoke[s];
         if (sm.display()) {
@@ -168,11 +183,13 @@ function drawGameOverScreen() {
     push();
     translate(rocket.x, screenHeight - 100);
     rotate(radians(200));
-    image(rocketImage, 0, 0, 50, 100);
+    image(rocketImage, 0, -75, 50, 100);
     pop();
     rectMode(CORNER);
     fill(14, 89, 1);
-    rect(0, screenHeight - 70, screenWidth, 70);
+    //rect(0, screenHeight - 70, screenWidth, 70);
+    imageMode(CORNER)
+    image(landImage, 0, screenHeight-200, screenWidth,200);
 }
 
 function drawPlaying() {
@@ -277,4 +294,11 @@ function drawEnergyBar(micLevel) {
     fill(red, green, 0, 80);
     rect(width - 38, height - 300 + (200 - h), 26, h);
 
+}
+
+function drawCloud(x, y){
+    fill("while");
+    ellipse(x,y, 50,20);
+    ellipse(x+40,y, 50,20);
+    ellipse(x+20,y-10, 50,20);
 }
