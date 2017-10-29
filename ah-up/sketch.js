@@ -8,6 +8,8 @@ var obstacles;
 var coins;
 var smoke;
 
+var cheatMode = false;
+
 var rocketHeight;
 var score;
 var rocketImage;
@@ -103,7 +105,9 @@ function drawStart() {
     textStyle(BOLD);
     text("Ah-Up!", screenWidth / 2, screenHeight / 2 - 40);
     fill(100);
-    text("Press 'S' to Start!", screenWidth / 2, screenHeight / 2 + 50);
+    text("Press 'S' to Play!", screenWidth / 2, screenHeight / 2 + 50);
+    textSize(24);
+    text("Press 'C' to Play with Arrow Keys!\n(and Voice)", screenWidth / 2, screenHeight / 2 + 100);
     textStyle(NORMAL);
 
     image(landImage, 0, screenHeight-200, screenWidth,200);
@@ -259,9 +263,12 @@ function drawPlaying() {
 
 function keyPressed() {
     if (state === 0) {
-        if (keyCode === 83) {
+        if (keyCode === 83 || keyCode === 67) {
             setupGame();
             state = 1;
+            if (keyCode === 67) {
+                cheatMode = true;
+            }
         }
     } else if (state === 3) {
         if (keyCode === 82) {
