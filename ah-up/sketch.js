@@ -268,6 +268,8 @@ function keyPressed() {
             state = 1;
             if (keyCode === 67) {
                 cheatMode = true;
+            } else {
+                cheatMode = false;
             }
         }
     } else if (state === 3) {
