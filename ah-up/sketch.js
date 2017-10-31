@@ -33,7 +33,10 @@ function preload() {
 
 function setup() {
     mic = new p5.AudioIn();
-    createCanvas(screenWidth, screenHeight);
+    theCanvas = createCanvas(screenWidth, screenHeight);
+    theCanvas.parent("#game");
+    theCanvas.style('display', 'block');
+    theCanvas.style('margin', 'auto');
     mic.start();
     comets.push(loadImage("images/comet-blue.png"));
     comets.push(loadImage("images/comet-red.png"));
