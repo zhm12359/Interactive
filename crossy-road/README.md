@@ -20,7 +20,7 @@ addToWorld(w) //a function that adds the car to the world w
 move() // a function that make the car move according to the speed given in the field
 ```
 ### Usage:
-```
+```javascript
 world = new World('VRScene');
 var car = new Car({
             x: random(-100, 100), y: w/3, z: offset,
@@ -29,7 +29,7 @@ var car = new Car({
             asset:"gold",
             speed: random(0.05, 0.3) * ( random(-1,1) > 0 ? 1 : -1)
         });
-        car.addToWorld(world);
+car.addToWorld(world);
 ```
 
 ## Object: Tire()
@@ -49,11 +49,11 @@ nudge(x,y,z) // a function that make the tire move in the direction specified
 spin(s) //a function that makes the tire spin given a speed s
 ```
 ### Usage:
-```
+```javascript
 world = new World('VRScene');
 var r = 2;
 var tire = new Tire({
                   x: 2, y: 2, z: 2, radius: r/20*19, radiusTubular: r/20, red:0, green:0, blue:0
               });
-        tire.addToWorld(world);
+tire.addToWorld(world);
 ```
