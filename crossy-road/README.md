@@ -2,7 +2,7 @@
 Users can use VR Goggle or Dance Pad (to be decided) to move characters around to avoid the car.
 
 
-##Object: Car()
+## Object: Car()
 ### Argument
 An opt Object that specifies:
 ```
@@ -32,7 +32,7 @@ var car = new Car({
         car.addToWorld(world);
 ```
 
-##Object: Tire()
+## Object: Tire()
 ### Argument
 An opt Object that specifies:
 ```
