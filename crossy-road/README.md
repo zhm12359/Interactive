@@ -1,4 +1,4 @@
-#Final Project: VR Crossy Road
+# Final Project: VR Crossy Road
 Users can use VR Goggle or Dance Pad (to be decided) to move characters around to avoid the car.
 
 
