@@ -1,10 +1,8 @@
 var world;
 var wheel;
 var cars = [];
-var moveToCarSound;
 
 function preload(){
-    moveToCarSound = loadSound("sounds/touchStar.aac");
 }
 
 function setup() {
@@ -86,10 +84,11 @@ function Tire(opt){
     this.outerFrame = new Torus(opt);
 
     for(var i=0; i<8; i++){
-        var cl = new Cylinder({
+        var cl = new Box({
             x: opt.x , y:opt.y, z:opt.z,
             height:opt.radius*2,
-            radius: opt.radiusTubular,
+            width: opt.radiusTubular,
+            depth: opt.radiusTubular,
             red:200, green:200, blue:200,
             rotationZ: 360/8 * i
         });
