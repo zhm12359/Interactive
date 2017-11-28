@@ -108,17 +108,17 @@ function Tire(opt){
         });
     }
 
-    this.rotate = function(x,y,z){
-        this.innerBars.forEach(function(b){
-            b.rotateX = x;
-            b.rotateY = y;
-            b.rotateZ = z;
-        });
-
-        this.outerFrame.rotateX = x;
-        this.outerFrame.rotateY = y;
-        this.outerFrame.rotateZ = z;
-    }
+    // this.rotate = function(x,y,z){
+    //     this.innerBars.forEach(function(b){
+    //         b.rotateX = x;
+    //         b.rotateY = y;
+    //         b.rotateZ = z;
+    //     });
+    //
+    //     this.outerFrame.rotateX = x;
+    //     this.outerFrame.rotateY = y;
+    //     this.outerFrame.rotateZ = z;
+    // }
 
     this.nudge = function(x,y,z){
         this.innerBars.forEach(function(b){
