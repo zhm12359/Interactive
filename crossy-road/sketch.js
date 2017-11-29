@@ -15,8 +15,8 @@ function setup() {
         height: 100,
         rotationX:-90,
         asset:"highway",
-        repeatX:781,
-        repeatY:580
+        repeatX:39/2,
+        repeatY:25/2
     });
 
     world.add(floor);
@@ -33,7 +33,7 @@ function setup() {
             width:w, height:w/5,depth: random(1,2),
             red: random(255), green:random(255), blue:random(255),
             asset:"gold",
-            speed: random(0.3, 0.5) * ( random(-1,1) > 0 ? 1 : -1)
+            speed: random(0.05, 0.3) * ( random(-1,1) > 0 ? 1 : -1)
         });
         car.addToWorld(world);
         cars.push(car);
@@ -71,14 +71,20 @@ function draw() {
             c.speed=-1 * c.speed;
             if(c.speed>0){
                 while(c.lowerBody.x + c.speed < -50+c.lowerBody.width){
-                    c.speed += 0.15;
+                    c.speed += 0.01;
                 }
             }
+
+
             if(c.speed<0){
                 while(c.lowerBody.x + c.speed > 50-c.lowerBody.width){
-                    c.speed -= 0.15;
+                    c.speed -= 0.01;
                 }
             }
+            c.move();
+
+            if(c.speed>=0.3) c.speed = 0.3;
+            if(c.speed<=-0.3) c.speed = -0.3;
         }
     })
 
