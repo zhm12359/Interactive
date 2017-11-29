@@ -108,17 +108,6 @@ function Tire(opt){
         });
     }
 
-    // this.rotate = function(x,y,z){
-    //     this.innerBars.forEach(function(b){
-    //         b.rotateX = x;
-    //         b.rotateY = y;
-    //         b.rotateZ = z;
-    //     });
-    //
-    //     this.outerFrame.rotateX = x;
-    //     this.outerFrame.rotateY = y;
-    //     this.outerFrame.rotateZ = z;
-    // }
 
     this.nudge = function(x,y,z){
         this.innerBars.forEach(function(b){
@@ -199,16 +188,6 @@ function Car(opt){
         this.lowerBody.nudge(self.speed,0,0);
         this.light.nudge(self.speed, 0, 0);
     }
-
-    // this.turn = function(x,y,z) {
-    //     this.tires.forEach(function(t){
-    //         t.rotate(x,y,z);
-    //     });
-    //     this.upperBody.rotationX = x;
-    //     this.upperBody.rotationZ = z;
-    //     this.lowerBody.rotationX = x;
-    //     this.lowerBody.rotationZ = z;
-    // }
 
 }
 
