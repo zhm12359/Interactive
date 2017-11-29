@@ -9,32 +9,31 @@ function setup() {
     noCanvas();
 
     world = new World('VRScene');
-    world.setFlying(true);
 
     var floor = new Plane({
-        width: 200,
-        height: 200,
+        width: 100,
+        height: 100,
         rotationX:-90,
-        asset:"stone",
-        repeatX:200,
-        repeatY:200
+        asset:"highway",
+        repeatX:781,
+        repeatY:580
     });
 
     world.add(floor);
 
     world.setUserPosition(0,1,15);
 
-    var offset = -100;
+    var offset = -50;
     for(var i=0; i<10; i++){
 
-        offset += 10;
+        offset += 5;
         var w = random(4,7);
         var car = new Car({
-            x: random(-100, 100), y: w/3, z: offset,
+            x: random(-50, 50), y: w/3, z: offset,
             width:w, height:w/5,depth: random(1,2),
             red: random(255), green:random(255), blue:random(255),
             asset:"gold",
-            speed: random(0.05, 0.3) * ( random(-1,1) > 0 ? 1 : -1)
+            speed: random(0.3, 0.5) * ( random(-1,1) > 0 ? 1 : -1)
         });
         car.addToWorld(world);
         cars.push(car);
@@ -43,10 +42,10 @@ function setup() {
 
     for(var i=0; i<10; i++){
 
-        offset += 10;
+        offset += 5;
         var w = random(4,7);
         var car = new Car({
-            x: random(-100, 100), y: w/3, z: offset,
+            x: random(-50, 50), y: w/3, z: offset,
             asset: "blue",
             width:w, height:w/5,depth: random(1,2),
             red: random(255), green:random(255), blue:random(255),
@@ -68,9 +67,18 @@ function draw() {
 
     cars.forEach(function(c){
         c.move();
-        if(c.lowerBody.x < -100+c.lowerBody.width || c.lowerBody.x > 100-c.lowerBody.width) {
+        if(c.lowerBody.x < -50+c.lowerBody.width || c.lowerBody.x > 50-c.lowerBody.width) {
             c.speed=-1 * c.speed;
-
+            if(c.speed>0){
+                while(c.lowerBody.x + c.speed < -50+c.lowerBody.width){
+                    c.speed += 0.15;
+                }
+            }
+            if(c.speed<0){
+                while(c.lowerBody.x + c.speed > 50-c.lowerBody.width){
+                    c.speed -= 0.15;
+                }
+            }
         }
     })
 
@@ -187,6 +195,15 @@ function Car(opt){
         this.upperBody.nudge(self.speed,0,0);
         this.lowerBody.nudge(self.speed,0,0);
         this.light.nudge(self.speed, 0, 0);
+    }
+
+    this.setXYZ = function(x,y,z){
+        this.upperBody.setXYZ(x,y,z);
+        this.lowerBody.setXYZ(x,y,z);
+        this.light.setXYZ(x,y,z);
+        this.tires.forEach(function(t){
+            t.setXYZ(x,y,z);
+        })
     }
 
 }
