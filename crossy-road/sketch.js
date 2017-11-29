@@ -214,6 +214,5 @@ function Car(opt){
 
 
 function moveUserToTheCar(me) {
-    moveToCarSound.play();
     world.slideToObject(me, 100);
 }
