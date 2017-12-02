@@ -11,18 +11,26 @@ function setup() {
 
     world = new World('VRScene');
 
-    var floor = new Plane({
-        width: 100,
-        height: 100,
-        rotationX: -90,
-        asset: "highway",
-        repeatX: 39 / 2,
-        repeatY: 25 / 2
-    });
+    // var floor = new Plane({
+    //     width: 100,
+    //     height: 100,
+    //     rotationX: -90,
+    //     asset: "highway",
+    //     repeatX: 39 / 2,
+    //     repeatY: 25 / 2
+    // });
+    // world.add(floor);
 
-    world.add(floor);
+    var grass = new Grass(0, 0, 100, 10);
+    grass.addToWorld(world);
+    var road = new Road(0, 10, 100, 10);
+    road.addToWorld(world);
+    grass = new Grass(0, 20, 100, 10);
+    grass.addToWorld(world);
+    var water = new River(0, 30, 100, 10);
+    water.addToWorld(world);
 
-    world.setUserPosition(0, 1, 15);
+    // world.setUserPosition(0, 1, 15);
 
     var offset = -50;
     /*
@@ -58,6 +66,7 @@ function setup() {
     }
     */
 
+    /*
     offset = -50;
     for (var i = 0; i < 10; i++) {
         offset += 5;
@@ -70,6 +79,7 @@ function setup() {
         log.addToWorld(world);
         logs.push(log);
     }
+    */
 
 }
 
