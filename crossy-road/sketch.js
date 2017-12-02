@@ -126,6 +126,9 @@ function Tire(opt) {
 
     this.innerBars = [];
     this.outerFrame = new Torus(opt);
+    this.x = opt.x;
+    this.y = opt.y;
+    this.z = opt.z;
 
     for (var i = 0; i < 8; i++) {
         var cl = new Box({
@@ -153,12 +156,15 @@ function Tire(opt) {
     };
 
 
-    this.nudge = function (x, y, z) {
+    this.nudge = function (xs, ys, zs) {
         this.innerBars.forEach(function (b) {
-            b.nudge(x, y, z);
+            b.nudge(xs, ys, zs);
         });
 
-        this.outerFrame.nudge(x, y, z);
+        this.outerFrame.nudge(xs, ys, zs);
+        this.x += xs;
+        this.y += ys;
+        this.z += zs;
     };
 
 }
@@ -166,6 +172,10 @@ function Tire(opt) {
 //opt's x y z will be the center point of the lowerBody's upper surface's center
 //opt's height and width and depth will be lowerBody's height and width and depth
 function Car(opt) {
+
+    this.x = opt.x;
+    this.y = opt.y;
+    this.z = opt.z;
 
     this.tires = [];
     this.upperBody = new Box(Object.assign({}, opt, {
@@ -254,6 +264,8 @@ function Car(opt) {
         this.upperBody.nudge(self.speed, 0, 0);
         this.lowerBody.nudge(self.speed, 0, 0);
         this.light.nudge(self.speed, 0, 0);
+
+        this.x += self.speed;
     };
 
     this.setXYZ = function (x, y, z) {
