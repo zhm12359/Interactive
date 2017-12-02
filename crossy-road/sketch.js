@@ -66,20 +66,19 @@ function setup() {
     }
     */
 
-    /*
-    offset = -50;
-    for (var i = 0; i < 10; i++) {
-        offset += 5;
-        var w = random(4, 7);
-        var log = new Log({
-            x: random(-50, 50), y: 0, z: offset,
-            width: w, height: 1, depth: random(1, 2),
-            xSpeed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1), ySpeed: 0, zSpeed: 0
-        });
-        log.addToWorld(world);
-        logs.push(log);
-    }
-    */
+
+    // offset = -50;
+    // for (var i = 0; i < 10; i++) {
+    //     offset += 5;
+    //     var w = random(4, 7);
+    //     var log = new Log({
+    //         x: random(-50, 50), y: 0, z: offset,
+    //         width: w, height: 1, depth: random(1, 2),
+    //         xSpeed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1), ySpeed: 0, zSpeed: 0
+    //     });
+    //     log.addToWorld(world);
+    //     logs.push(log);
+    // }
 
 }
 
@@ -339,6 +338,24 @@ function Log(opts) {
         // this.branches.forEach(function (e) {
         //     e.nudge(this.xSpeed, this.ySpeed, this.zSpeed);
         // });
+
+        //drift user part;
+        var userX = world.getUserPosition().x;
+        var userY = world.getUserPosition().z;
+
+        var z1 = this.body.x - this.width/2;
+        var z2 = this.body.z - this.depth/2;
+
+        var z3 = this.body.x + this.width/2;
+        var z4 = this.body.z + this.depth/2;
+
+        if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) ){
+            world.camera.nudgePosition(this.xSpeed, this.ySpeed, this.zSpeed);
+        }
     };
+
+
+
+
 
 }
