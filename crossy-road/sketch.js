@@ -23,7 +23,7 @@ function setup() {
 
     var grass = new Grass(0, 0, 100, 10);
     grass.addToWorld(world);
-    var road = new Road(0, 10, 100, 10);
+    var road = new Road(0, 10, 100, 10, 3);
     road.addToWorld(world);
     grass = new Grass(0, 20, 100, 10);
     grass.addToWorld(world);

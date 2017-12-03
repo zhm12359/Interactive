@@ -3,9 +3,5 @@ function isPointInsideRect(x, y, z1, z2, z3, z4) {
     x2 = Math.max(z1, z3);
     y1 = Math.min(z2, z4);
     y2 = Math.max(z2, z4);
-    if ((x1 <= x ) && ( x <= x2) && (y1 <= y) && (y <= y2)) {
-        return true;
-    } else {
-        return false;
-    };
-};
+    return ((x1 <= x ) && ( x <= x2) && (y1 <= y) && (y <= y2))
+}
