@@ -21,14 +21,16 @@ function setup() {
     // });
     // world.add(floor);
 
-    var grass = new Grass(0, 0, 100, 10);
-    grass.addToWorld(world);
-    var road = new Road(0, 10, 100, 10, 3);
-    road.addToWorld(world);
-    grass = new Grass(0, 20, 100, 10);
-    grass.addToWorld(world);
-    var water = new River(0, 30, 100, 10);
-    water.addToWorld(world);
+    // var grass = new Grass(0, 0, 100, 10);
+    // grass.addToWorld(world);
+    // var road = new Road(0, 10, 100, 10, 3);
+    // road.addToWorld(world);
+    // grass = new Grass(0, 20, 100, 10);
+    // grass.addToWorld(world);
+    // var water = new River(0, 30, 100, 10);
+    // water.addToWorld(world);
+
+    layoutMap(world);
 
     // world.setUserPosition(0, 1, 15);
 
@@ -353,9 +355,5 @@ function Log(opts) {
             world.camera.nudgePosition(this.xSpeed, this.ySpeed, this.zSpeed);
         }
     };
-
-
-
-
 
 }
