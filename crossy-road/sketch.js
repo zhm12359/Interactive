@@ -12,6 +12,7 @@ function setup() {
     world = new World('VRScene');
 
     layoutMap(world);
+    layoutLogs(world);
 
     var fence = new Fence(-50, 0, 100, 10, 'z');
     fence.addToWorld(world);
@@ -57,6 +58,7 @@ function setup() {
     */
 
 
+
     // offset = -50;
     // for (var i = 0; i < 10; i++) {
     //     offset += 5;
@@ -90,7 +92,6 @@ function draw() {
                 }
             }
 
-
             if (c.speed < 0) {
                 while (c.lowerBody.x + c.speed > 50 - c.lowerBody.width) {
                     c.speed -= 0.01;
@@ -105,8 +106,12 @@ function draw() {
 
     logs.forEach(function (l) {
         l.move();
-        if (l.x < -50 + l.width / 2 || l.x > 50 - l.width / 2) {
-            l.xSpeed *= -1;
+        if (l.x < -50 + l.width / 2) {
+            l.body.setX(50 - l.width / 2);
+            l.x = 50 - l.width / 2;
+        } else if (l.x > 50 - l.width / 2) {
+            l.body.setX(-50 + l.width / 2);
+            l.x = -50 + l.width / 2;
         }
     });
 
@@ -320,6 +325,10 @@ function Log(opts) {
 
     this.addToWorld = function (w) {
         w.add(this.body);
+    };
+
+    this.setXYZ = function (x, y, z) {
+        this.body.setXYZ(x, y, z);
     };
 
     this.move = function () {
