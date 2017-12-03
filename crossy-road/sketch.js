@@ -70,6 +70,8 @@ function setup() {
     //     logs.push(log);
     // }
 
+    layoutCars(world);
+
 }
 
 function draw() {
@@ -345,3 +347,5 @@ function Log(opts) {
     };
 
 }
+
+

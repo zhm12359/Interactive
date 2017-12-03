@@ -8,7 +8,7 @@ function isPointInsideRect(x, y, z1, z2, z3, z4) {
 
 function layoutMap(w){
 
-    var grass1 = new Grass(0, -45, 100, 15);
+    var grass1 = new Grass(0, -45, 100, 10);
     grass1.addToWorld(w);
 
     var road1 = new Road(0, -30, 100, 20, 4);
@@ -28,6 +28,42 @@ function layoutMap(w){
 
     var grass4 = new Grass(0, 45, 100, 10);
     grass4.addToWorld(w);
+
+
+}
+
+function layoutCars(wo){
+
+    var offset = -36;
+    var w = 4;
+
+    for(var i=0; i<4; i++){
+        var car = new Car({
+            x: 0, y: w / 3, z: offset,
+            width: w, height: w / 5, depth: random(1, 2),
+            red: random(255), green: random(255), blue: random(255),
+            asset: "gold",
+            speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
+        });
+        car.addToWorld(wo);
+        cars.push(car);
+        offset += 4;
+    }
+
+    offset = 24;
+
+    for(var i=0; i<4; i++){
+        var car = new Car({
+            x: 0, y: w / 3, z: offset,
+            width: w, height: w / 5, depth: random(1, 2),
+            red: random(255), green: random(255), blue: random(255),
+            asset: "blue",
+            speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
+        });
+        car.addToWorld(wo);
+        cars.push(car);
+        offset += 4;
+    }
 
 
 }
