@@ -31,3 +31,23 @@ function layoutMap(w){
 
 
 }
+
+function layoutLogs(w) {
+
+    var riverOffset = -8;
+    for (var row = 0; row < 5; row++) {
+        var numLogs = random(2, 5);
+        for (var i = 0; i < numLogs; i++) {
+            var width = random(4, 7);
+            var log = new Log({
+                x: random(-43, 43), y: 0, z: riverOffset,
+                width: width, height: 1, depth: 4,
+                xSpeed: random(0.05, 0.1) * (row % 2 === 0 ? 1 : -1), ySpeed: 0, zSpeed: 0
+            });
+            log.addToWorld(w);
+            logs.push(log);
+        }
+        riverOffset += 4;
+    }
+
+}
