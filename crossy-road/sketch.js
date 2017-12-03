@@ -32,6 +32,10 @@ function setup() {
 
     layoutMap(world);
 
+    // add fence at 0,0 length 10, 10 posts, and travels along the z-axis
+    var fence = new Fence(0, 0, 100, 10, 'z');
+    fence.addToWorld(world);
+
     // world.setUserPosition(0, 1, 15);
 
     var offset = -50;
