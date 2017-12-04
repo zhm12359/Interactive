@@ -5,6 +5,8 @@ function Car(opt) {
     this.x = opt.x;
     this.y = opt.y;
     this.z = opt.z;
+    this.width = opt.width;
+    this.depth = opt.depth;
 
     this.tires = [];
     this.upperBody = new Box(Object.assign({}, opt, {
@@ -107,18 +109,17 @@ function Car(opt) {
     };
 
     this.checkCollision = function(){
-        // var userX = world.getUserPosition().x;
-        // var userY = world.getUserPosition().z;
-        //
-        // var z1 = this.body.x - this.width/2;
-        // var z2 = this.body.z - this.depth/2;
-        //
-        // var z3 = this.body.x + this.width/2;
-        // var z4 = this.body.z + this.depth/2;
-        //
-        // if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) ){
-        //     world.camera.nudgePosition(this.xSpeed, this.ySpeed, this.zSpeed);
-        // }
+        var userX = world.getUserPosition().x;
+        var userY = world.getUserPosition().z;
+
+        var z1 = this.lowerBody.x - this.width/2;
+        var z2 = this.lowerBody.z - this.depth/2;
+
+        var z3 = this.lowerBody.x + this.width/2;
+        var z4 = this.lowerBody.z + this.depth/2;
+
+        if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) )return true;
+        else return false;
     }
 
 }
