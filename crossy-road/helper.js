@@ -1,12 +1,12 @@
 function isPointInsideRect(x, y, z1, z2, z3, z4) {
-    x1 = Math.min(z1, z3);
-    x2 = Math.max(z1, z3);
-    y1 = Math.min(z2, z4);
-    y2 = Math.max(z2, z4);
+    var x1 = Math.min(z1, z3);
+    var x2 = Math.max(z1, z3);
+    var y1 = Math.min(z2, z4);
+    var y2 = Math.max(z2, z4);
     return ((x1 <= x ) && ( x <= x2) && (y1 <= y) && (y <= y2))
 }
 
-function layoutMap(w){
+function layoutMap(w) {
 
     var grass1 = new Grass(0, -45, 100, 10);
     grass1.addToWorld(w);
@@ -17,7 +17,7 @@ function layoutMap(w){
     var grass2 = new Grass(0, -15, 100, 10);
     grass2.addToWorld(w);
 
-    var river = new River(0,0,100,20 );
+    var river = new River(0, 0, 100, 20);
     river.addToWorld(w);
 
     var grass3 = new Grass(0, 15, 100, 10);
@@ -83,6 +83,28 @@ function layoutLogs(w) {
             logs.push(log);
         }
         riverOffset += 4;
+    }
+
+}
+
+function layoutCoins(w) {
+
+    for (var i = 0; i < 5; i++) {
+        var coin = new Coin({
+            x: random(-43, 43),
+            z: random(-43, -15)
+        });
+        coin.addToWorld(w);
+        coins.push(coin);
+    }
+
+    for (var i = 0; i < 5; i++) {
+        var coin = new Coin({
+            x: random(-43, 43),
+            z: random(15, 43)
+        });
+        coin.addToWorld(w);
+        coins.push(coin);
     }
 
 }

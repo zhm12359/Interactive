@@ -1,7 +1,8 @@
 var world;
-var wheel;
+
 var cars = [];
 var logs = [];
+var coins = [];
 
 function preload() {
 }
@@ -12,7 +13,6 @@ function setup() {
     world = new World('VRScene');
 
     layoutMap(world);
-    layoutLogs(world);
 
     var fence = new Fence(-50, 0, 100, 10, 'z');
     fence.addToWorld(world);
@@ -23,64 +23,17 @@ function setup() {
     fence = new Fence(0, -50, 100, 10, 'x');
     fence.addToWorld(world);
 
-    var offset = -50;
-    /*
-    for (var i = 0; i < 10; i++) {
-
-        offset += 5;
-        var w = random(4, 7);
-        var car = new Car({
-            x: random(-50, 50), y: w / 3, z: offset,
-            width: w, height: w / 5, depth: random(1, 2),
-            red: random(255), green: random(255), blue: random(255),
-            asset: "gold",
-            speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
-        });
-        car.addToWorld(world);
-        cars.push(car);
-
-    }
-
-    for (var i = 0; i < 10; i++) {
-        offset += 5;
-        var w = random(4, 7);
-        var car = new Car({
-            x: random(-50, 50), y: w / 3, z: offset,
-            asset: "blue",
-            width: w, height: w / 5, depth: random(1, 2),
-            red: random(255), green: random(255), blue: random(255),
-            speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
-        });
-        car.addToWorld(world);
-        cars.push(car);
-
-    }
-    */
-
-
-
-    // offset = -50;
-    // for (var i = 0; i < 10; i++) {
-    //     offset += 5;
-    //     var w = random(4, 7);
-    //     var log = new Log({
-    //         x: random(-50, 50), y: 0, z: offset,
-    //         width: w, height: 1, depth: random(1, 2),
-    //         xSpeed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1), ySpeed: 0, zSpeed: 0
-    //     });
-    //     log.addToWorld(world);
-    //     logs.push(log);
-    // }
-
-    layoutCars(world);
+    // layoutCars(world);
+    // layoutLogs(world);
+    layoutCoins(world);
 
 }
 
 function draw() {
 
-    // if (mouseIsPressed) {
-    //     world.moveUserForward(0.05);
-    // }
+    if (mouseIsPressed) {
+        world.moveUserForward(0.05);
+    }
 
     cars.forEach(function (c) {
         c.move();
@@ -303,26 +256,6 @@ function Log(opts) {
         blue: 2
     });
 
-    // this.numberOfBranches = random(0, 5);
-    // this.branches = [];
-    // for (var i = 0; i < this.numberOfBranches; i++) {
-    //     this.branches.push(new Box({
-    //         x: random(opts.x - opts.width / 2, opts.x + opts.width / 2),
-    //         y: random(opts.y - opts.height / 2, opts.y + opts.height / 2),
-    //         z: random(opts.z - opts.depth / 2, opts.z + opts.depth / 2),
-    //         height: random(.1 * opts.height, .5 * opts.height),
-    //         width: random(.1 * opts.width, .5 * opts.width),
-    //         depth: random(.1 * opts.depth, .5 * opts.depth),
-    //         rotationX: radians(random(0, 180)),
-    //         rotationY: radians(random(0, 180)),
-    //         rotationZ: radians(random(0, 180)),
-    //         red: 102,
-    //         green: 53,
-    //         blue: 2
-    //     }));
-    //     console.log("Pushed a branch")
-    // }
-
     this.addToWorld = function (w) {
         w.add(this.body);
     };
@@ -336,9 +269,6 @@ function Log(opts) {
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.z += this.zSpeed;
-        // this.branches.forEach(function (e) {
-        //     e.nudge(this.xSpeed, this.ySpeed, this.zSpeed);
-        // });
 
         //drift user part;
         var userX = world.getUserPosition().x;
@@ -353,6 +283,42 @@ function Log(opts) {
         if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) ){
             world.camera.nudgePosition(this.xSpeed, this.ySpeed, this.zSpeed);
         }
+    };
+
+}
+
+function Coin(opts) {
+
+    this.x = opts.x;
+    this.z = opts.z;
+    this.size = 1;
+
+    this.body = new Box({
+        x: this.x,
+        y: .8,
+        z: this.z,
+        height: 1,
+        width: 1,
+        depth: .1,
+        red: 244,
+        green: 223,
+        blue: 6
+    });
+
+    this.marker = new Octahedron({
+        x: this.x,
+        y: 5,
+        z: this.z,
+        scaleY: 1.5,
+        red: 0,
+        blue: 0,
+        green: 255,
+        opacity: .5
+    });
+
+    this.addToWorld = function (w) {
+        w.add(this.body);
+        w.add(this.marker);
     };
 
 }
