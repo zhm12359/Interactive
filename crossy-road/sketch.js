@@ -11,20 +11,12 @@ function setup() {
     noCanvas();
 
     world = new World('VRScene');
+    world.setUserPosition(0, 1, 45);
 
     layoutMap(world);
-
-    var fence = new Fence(-50, 0, 100, 10, 'z');
-    fence.addToWorld(world);
-    fence = new Fence(50, 0, 100, 10, 'z');
-    fence.addToWorld(world);
-    fence = new Fence(0, 50, 100, 10, 'x');
-    fence.addToWorld(world);
-    fence = new Fence(0, -50, 100, 10, 'x');
-    fence.addToWorld(world);
-
-    // layoutCars(world);
-    // layoutLogs(world);
+    layoutLogs(world);
+    layoutCars(world);
+    layoutFences(world);
     layoutCoins(world);
 
 }
