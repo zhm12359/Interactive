@@ -21,9 +21,9 @@ function setup() {
 
 function draw() {
 
-    // if (mouseIsPressed) {
-    //     world.moveUserForward(0.05);
-    // }
+    if (mouseIsPressed) {
+        world.moveUserForward(0.05);
+    }
 
     cars.forEach(function (c) {
         c.move();
