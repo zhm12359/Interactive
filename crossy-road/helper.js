@@ -41,7 +41,6 @@ function layoutCars(wo) {
             x: 0, y: w / 3, z: offset,
             width: w, height: w / 5, depth: random(1, 2),
             red: random(255), green: random(255), blue: random(255),
-            asset: "gold",
             speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
         });
         car.addToWorld(wo);
@@ -56,7 +55,6 @@ function layoutCars(wo) {
             x: 0, y: w / 3, z: offset,
             width: w, height: w / 5, depth: random(1, 2),
             red: random(255), green: random(255), blue: random(255),
-            asset: "blue",
             speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
         });
         car.addToWorld(wo);
