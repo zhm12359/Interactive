@@ -34,23 +34,26 @@ function Log(opts) {
         this.body.setXYZ(x, y, z);
     };
 
+    this.checkCollision = function() {
+        var userX = world.getUserPosition().x;
+        var userY = world.getUserPosition().z;
+
+        var z1 = this.body.x - this.width / 2;
+        var z2 = this.body.z - this.depth / 2;
+
+        var z3 = this.body.x + this.width / 2;
+        var z4 = this.body.z + this.depth / 2;
+
+        return isPointInsideRect(userX, userY, z1, z2, z3, z4);
+    };
+
     this.move = function () {
         this.body.nudge(this.xSpeed, this.ySpeed, this.zSpeed);
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.z += this.zSpeed;
 
-        //drift user part;
-        var userX = world.getUserPosition().x;
-        var userY = world.getUserPosition().z;
-
-        var z1 = this.body.x - this.width/2;
-        var z2 = this.body.z - this.depth/2;
-
-        var z3 = this.body.x + this.width/2;
-        var z4 = this.body.z + this.depth/2;
-
-        if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) ){
+        if (this.checkCollision()) {
             world.camera.nudgePosition(this.xSpeed, this.ySpeed, this.zSpeed);
         }
     };

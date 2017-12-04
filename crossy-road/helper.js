@@ -29,7 +29,6 @@ function layoutMap(w) {
     var grass4 = new Grass(0, 45, 100, 10);
     grass4.addToWorld(w);
 
-
 }
 
 function layoutCars(wo) {

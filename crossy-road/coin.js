@@ -32,4 +32,17 @@ function Coin(opts) {
         w.add(this.marker);
     };
 
+    this.checkCollision = function() {
+        var userX = world.getUserPosition().x;
+        var userY = world.getUserPosition().z;
+
+        var z1 = this.body.x - this.size / 2;
+        var z2 = this.body.z - this.size / 2;
+
+        var z3 = this.body.x + this.size / 2;
+        var z4 = this.body.z + this.size / 2;
+
+        return isPointInsideRect(userX, userY, z1, z2, z3, z4);
+    };
+
 }
