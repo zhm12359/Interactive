@@ -9,6 +9,10 @@ var coins = [];
 // 2 - Game Over State
 var state = 1;
 
+var startX = 0;
+var startY = 1;
+var startZ = 45;
+
 var score = 0;
 
 function preload() {
@@ -18,7 +22,7 @@ function setup() {
     noCanvas();
 
     world = new World('VRScene');
-    world.setUserPosition(0, 1, 45);
+    world.setUserPosition(startX, startY, startZ);
 
     layoutMap(world);
     layoutLogs(world);
@@ -72,6 +76,7 @@ function drawPlaying() {
 
         if (c.checkCollision()) {
             console.log("Hit by car");
+            world.setUserPosition(startX, startY, startZ);
         }
     });
 
@@ -93,16 +98,16 @@ function drawPlaying() {
 
     var userZ = world.getUserPosition().z;
     if (drowning && userZ >= -10 && userZ <= 10) {
-        console.log("User is drowning");
+        world.setUserPosition(startX, startY, startZ);
     }
 
     for (var i = 0; i < coins.length; i++) {
         var c = coins[i];
         if (c.checkCollision()) {
             score++;
+            displayScore();
             world.remove(coins[i].body);
             world.remove(coins[i].marker);
-            console.log(score);
             var newCoin = new Coin({
                 x: random(-43, 43),
                 z: (i < 5) ? random(-43, -15) : random(15, 43)
@@ -111,7 +116,6 @@ function drawPlaying() {
             newCoin.addToWorld(world);
         }
     }
-
 }
 
 function drawStart() {
