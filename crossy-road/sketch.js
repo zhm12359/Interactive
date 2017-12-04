@@ -10,6 +10,7 @@ function setup() {
     noCanvas();
 
     world = new World('VRScene');
+    world.setUserPosition(0, 1, 45);
 
     layoutMap(world);
     layoutLogs(world);
