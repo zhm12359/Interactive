@@ -13,19 +13,8 @@ function setup() {
 
     layoutMap(world);
     layoutLogs(world);
-
-    var fence = new Fence(-50, 0, 100, 10, 'z');
-    fence.addToWorld(world);
-    fence = new Fence(50, 0, 100, 10, 'z');
-    fence.addToWorld(world);
-    fence = new Fence(0, 50, 100, 10, 'x');
-    fence.addToWorld(world);
-    fence = new Fence(0, -50, 100, 10, 'x');
-    fence.addToWorld(world);
-
-    var offset = -50;
-
     layoutCars(world);
+    layoutFences(world);
 
 }
 

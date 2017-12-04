@@ -86,3 +86,14 @@ function layoutLogs(w) {
     }
 
 }
+
+function layoutFences(w){
+    var fence = new Fence(-50, 0, 100, 10, 'z');
+    fence.addToWorld(w);
+    fence = new Fence(50, 0, 100, 10, 'z');
+    fence.addToWorld(w);
+    fence = new Fence(0, 50, 100, 10, 'x');
+    fence.addToWorld(w);
+    fence = new Fence(0, -50, 100, 10, 'x');
+    fence.addToWorld(w);
+}
