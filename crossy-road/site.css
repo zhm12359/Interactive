@@ -1,0 +1,7 @@
+#VRScene{
+    z-index: -1;
+}
+
+#score{
+    z-index: 1;
+}

@@ -118,3 +118,7 @@ function layoutFences(w) {
     fence = new Fence(0, -50, 100, 10, 'x');
     fence.addToWorld(w);
 }
+
+function displayScore(){
+    $("#score")[0].textContent = "Score: " + score;
+}
