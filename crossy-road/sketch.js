@@ -15,6 +15,8 @@ var startZ = 45;
 
 var score = 0;
 
+var isMobile = false;
+
 function preload() {
 }
 
@@ -30,12 +32,16 @@ function setup() {
     layoutFences(world);
     layoutCoins(world);
 
+    isMobile = isBrowserMobile();
+
 }
 
 function draw() {
 
     if (mouseIsPressed) {
-        world.moveUserForward(0.05);
+        //mobile touch is less sensitive than PC click
+        if(isMobile) world.moveUserForward(0.35);
+        else world.moveUserForward(0.05);
     }
 
     switch (state) {
@@ -125,3 +131,4 @@ function drawStart() {
 function drawGameOver() {
     console.log("Game over");
 }
+
