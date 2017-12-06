@@ -13,6 +13,7 @@ function Cloud(opt){
     opt.blue = 255;
     opt.green = 255;
     opt.side = "double";
+    opt.shader = "flat";
 
     var r = this.width/5;
     var self = this;
