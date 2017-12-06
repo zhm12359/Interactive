@@ -91,6 +91,7 @@ function drawPlaying() {
 
         if (c.checkCollision()) {
             deadTimes++;
+            score--;
             setUserToOrigin();
         }
 
@@ -124,6 +125,7 @@ function drawPlaying() {
 
     if (drowning && userZ >= -10 && userZ <= 10) {
         deadTimes++;
+        score--;
         waterSound.play();
         setUserToOrigin();
     }

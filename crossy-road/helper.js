@@ -235,4 +235,5 @@ function setUserToOrigin(){
 
     world.setUserPosition(startX, startY, startZ);
     world.camera.holder.setAttribute("rotation", "0 1.67 0");
+    refreshScore();
 }
