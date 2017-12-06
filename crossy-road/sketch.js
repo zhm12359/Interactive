@@ -14,12 +14,14 @@ var startY = 1;
 var startZ = 45;
 
 var score = 0;
+var deadTimes = 0;
 
 var isMobile = false;
 
 var startScreen;
-var scoreHolder;
+var endScreen;
 
+var scoreHolder;
 var timer = 180*60;//3minute timer
 var timerHolder;
 
@@ -65,7 +67,7 @@ function drawPlaying() {
 
     if (mouseIsPressed) {
         //mobile touch is less sensitive than PC click
-        if(isMobile) world.moveUserForward(0.35);
+        if(isMobile) world.moveUserForward(0.25);
         else world.moveUserForward(0.05);
     }
     punishNaughtyUserWhoGoesBeyondBound();
@@ -76,6 +78,7 @@ function drawPlaying() {
 
         if (c.checkCollision()) {
             console.log("Hit by car");
+            deadTimes++;
             world.setUserPosition(startX, startY, startZ);
         }
     });
@@ -98,6 +101,7 @@ function drawPlaying() {
 
     var userZ = world.getUserPosition().z;
     if (drowning && userZ >= -10 && userZ <= 10) {
+        deadTimes++;
         world.setUserPosition(startX, startY, startZ);
     }
 

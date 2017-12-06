@@ -184,6 +184,8 @@ function punishNaughtyUserWhoGoesBeyondBound(){
     var userX = world.getUserPosition().x;
     var userY = world.getUserPosition().z;
 
+    deadTimes++;
+
     if (!isPointInsideRect(userX, userY, -50, -50, 50, 50)) {
         score -= 1;
         world.setUserPosition(startX, startY, startZ);
