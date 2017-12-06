@@ -140,3 +140,28 @@ function layoutGame(){
     layoutFences(world);
     layoutCoins(world);
 }
+
+function changeDirectionIfNeeded(c){
+    if (c.lowerBody.x < -50 + c.lowerBody.width || c.lowerBody.x > 50 - c.lowerBody.width) {
+        c.speed = -1 * c.speed;
+        if (c.speed > 0) {
+            while (c.lowerBody.x + c.speed < -50 + c.lowerBody.width) {
+                c.speed += 0.01;
+            }
+        }
+
+        if (c.speed < 0) {
+            while (c.lowerBody.x + c.speed > 50 - c.lowerBody.width) {
+                c.speed -= 0.01;
+            }
+        }
+        c.move();
+
+        if (c.speed >= 0.3) c.speed = 0.3;
+        if (c.speed <= -0.3) c.speed = -0.3;
+    }
+}
+
+function punishNaughtyUser(){
+
+}
