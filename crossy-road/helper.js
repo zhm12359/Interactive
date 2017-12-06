@@ -86,7 +86,7 @@ function layoutLogs(w) {
 
 function layoutCoins(w) {
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 2; i++) {
         var coin = new Coin({
             x: random(-43, 43),
             z: random(-43, -15)
@@ -95,7 +95,7 @@ function layoutCoins(w) {
         coins.push(coin);
     }
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 2; i++) {
         var coin = new Coin({
             x: random(-43, 43),
             z: random(15, 43)
@@ -117,7 +117,7 @@ function layoutFences(w) {
 }
 
 function displayScore() {
-    $("#score")[0].textContent = "Score: " + score;
+    $("#score").attr("value", "Score: " + score);
 }
 
 function isBrowserMobile() {
@@ -128,4 +128,15 @@ function isBrowserMobile() {
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
 
+}
+
+function layoutGame(){
+
+    world.camera.holder.append(scoreHolder[0]);
+
+    layoutMap(world);
+    layoutLogs(world);
+    layoutCars(world);
+    layoutFences(world);
+    layoutCoins(world);
 }

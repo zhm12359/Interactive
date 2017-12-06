@@ -7,7 +7,7 @@ var coins = [];
 // 0 - Start State
 // 1 - Playing State
 // 2 - Game Over State
-var state = 1;
+var state = 0;
 
 var startX = 0;
 var startY = 1;
@@ -16,6 +16,9 @@ var startZ = 45;
 var score = 0;
 
 var isMobile = false;
+
+var startScreen;
+var scoreHolder;
 
 function preload() {
 }
@@ -26,23 +29,18 @@ function setup() {
     world = new World('VRScene');
     world.setUserPosition(startX, startY, startZ);
 
-    layoutMap(world);
-    layoutLogs(world);
-    layoutCars(world);
-    layoutFences(world);
-    layoutCoins(world);
-
     isMobile = isBrowserMobile();
+
+    startScreen = $(".start");
+    scoreHolder = $("#score").clone();
+    $("#score").remove();
+
 
 }
 
 function draw() {
 
-    if (mouseIsPressed) {
-        //mobile touch is less sensitive than PC click
-        if(isMobile) world.moveUserForward(0.35);
-        else world.moveUserForward(0.05);
-    }
+
 
     switch (state) {
         case 0:
@@ -58,6 +56,12 @@ function draw() {
 }
 
 function drawPlaying() {
+
+    if (mouseIsPressed) {
+        //mobile touch is less sensitive than PC click
+        if(isMobile) world.moveUserForward(0.35);
+        else world.moveUserForward(0.05);
+    }
 
     cars.forEach(function (c) {
         c.move();
@@ -125,7 +129,13 @@ function drawPlaying() {
 }
 
 function drawStart() {
-    console.log("Start Screen");
+
+    if(mouseIsPressed){
+        startScreen.remove();
+        layoutGame();
+        state=1;
+    }
+
 }
 
 function drawGameOver() {
