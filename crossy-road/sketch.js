@@ -61,7 +61,12 @@ function drawPlaying() {
         //mobile touch is less sensitive than PC click
         if(isMobile) world.moveUserForward(0.35);
         else world.moveUserForward(0.05);
+
     }
+
+    punishNaughtyUserWhoGoesBeyondBound()
+
+
 
     cars.forEach(function (c) {
         c.move();
