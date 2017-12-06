@@ -39,7 +39,7 @@ function layoutCars(wo) {
     for (var i = 0; i < 4; i++) {
         var car = new Car({
             x: 0, y: w / 3, z: offset,
-            width: w, height: w / 5, depth: random(1, 2),
+            width: w, height: w / 5, depth: 2,
             red: random(255), green: random(255), blue: random(255),
             speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
         });

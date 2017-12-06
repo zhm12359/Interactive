@@ -27,7 +27,14 @@ var timerHolder;
 
 var gameOverTimer = 0;
 
+var carSound;
+var waterSound;
+var coinSound;
+
 function preload() {
+    carSound = loadSound('sounds/horn.ogg');
+    waterSound = loadSound('sounds/splash.ogg');
+    coinSound = loadSound('sounds/coin.ogg');
 }
 
 function setup() {
@@ -46,7 +53,6 @@ function setup() {
     timerHolder = $("#timer").clone();
     timerHolder.attr("color", "#FFF");
     $("#timer").remove();
-
 
 }
 
@@ -76,15 +82,28 @@ function drawPlaying() {
     }
     punishNaughtyUserWhoGoesBeyondBound();
 
+    var userX = world.getUserPosition().x;
+    var userZ = world.getUserPosition().z;
+
     cars.forEach(function (c) {
         c.move();
         changeDirectionIfNeeded(c);
 
         if (c.checkCollision()) {
-            console.log("Hit by car");
             deadTimes++;
             setUserToOrigin();
         }
+
+        if (userZ >= c.z - c.width / 2 && userZ <= c.z + c.width / 2 && abs(c.x - userX) <= 6) {
+            if (c.speed < 0 && userX < c.x) {
+                if (!carSound.isPlaying())
+                    carSound.play();
+            } else if (c.speed > 0 && userX > c.x) {
+                if (!carSound.isPlaying())
+                    carSound.play();
+            }
+        }
+
     });
 
     var drowning = true;
@@ -103,15 +122,16 @@ function drawPlaying() {
         }
     });
 
-    var userZ = world.getUserPosition().z;
     if (drowning && userZ >= -10 && userZ <= 10) {
         deadTimes++;
+        waterSound.play();
         setUserToOrigin();
     }
 
     for (var i = 0; i < coins.length; i++) {
         var c = coins[i];
         if (c.checkCollision()) {
+            coinSound.play();
             score++;
             refreshScore();
             world.remove(coins[i].body);

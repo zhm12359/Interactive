@@ -11,9 +11,9 @@ function Coin(opts) {
         height: 1,
         width: 1,
         depth: .1,
-        red: 244,
-        green: 223,
-        blue: 6
+        asset: "coin",
+        repeatX: 1,
+        repeatY: 1
     });
 
     this.marker = new Octahedron({

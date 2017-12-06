@@ -118,6 +118,7 @@ function Car(opt) {
         var z3 = this.lowerBody.x + this.width/2;
         var z4 = this.lowerBody.z + this.depth/2;
 
+
         if( isPointInsideRect(userX, userY, z1, z2, z3, z4 ) )return true;
         else return false;
     }
