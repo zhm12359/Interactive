@@ -25,6 +25,8 @@ var scoreHolder;
 var timer = 180*60;//3minute timer
 var timerHolder;
 
+var gameOverTimer = 0;
+
 function preload() {
 }
 
@@ -32,15 +34,17 @@ function setup() {
     noCanvas();
 
     world = new World('VRScene');
-    world.setUserPosition(startX, startY, startZ);
+    setUserToOrigin();
 
     isMobile = isBrowserMobile();
 
     startScreen = $(".start");
     scoreHolder = $("#score").clone();
+    scoreHolder.attr("color", "#FFF");
     $("#score").remove();
 
     timerHolder = $("#timer").clone();
+    timerHolder.attr("color", "#FFF");
     $("#timer").remove();
 
 
@@ -79,7 +83,7 @@ function drawPlaying() {
         if (c.checkCollision()) {
             console.log("Hit by car");
             deadTimes++;
-            world.setUserPosition(startX, startY, startZ);
+            setUserToOrigin();
         }
     });
 
@@ -102,7 +106,7 @@ function drawPlaying() {
     var userZ = world.getUserPosition().z;
     if (drowning && userZ >= -10 && userZ <= 10) {
         deadTimes++;
-        world.setUserPosition(startX, startY, startZ);
+        setUserToOrigin();
     }
 
     for (var i = 0; i < coins.length; i++) {
@@ -134,6 +138,12 @@ function drawStart() {
 }
 
 function drawGameOver() {
-    console.log("Game over");
+    gameOverTimer--;
+    if (mouseIsPressed && gameOverTimer <= 0) {
+        $('#endTitle').attr('value', '');
+        $('#endScore').attr('value', '');
+        $('#endAgain').attr('value', '');
+        state = 1;
+    }
 }
 

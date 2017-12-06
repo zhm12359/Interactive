@@ -68,9 +68,9 @@ function layoutLogs(w) {
 
     var riverOffset = -8;
     for (var row = 0; row < 5; row++) {
-        var numLogs = random(2, 5);
+        var numLogs = random(3, 4);
         for (var i = 0; i < numLogs; i++) {
-            var width = random(4, 7);
+            var width = random(6, 8);
             var log = new Log({
                 x: random(-43, 43), y: 0, z: riverOffset,
                 width: width, height: 1, depth: 4,
@@ -120,19 +120,41 @@ function refreshScore() {
     $("#score").attr("value", "Score: " + score);
 }
 
-
+// var seconds;
 function refreshTimer(){
 
-    timer--;
-    var totalSeconds = int(timer/60);
-    var minutes = int( totalSeconds /60 - 0.5);
 
-    var seconds = int(totalSeconds - minutes*60);
+    timer--;
+    if(timer===0) {
+
+        scoreHolder = $("#score").clone();
+        $("#score").remove();
+
+        timerHolder = $("#timer").clone();
+        $("#timer").remove();
+
+        state = 2;
+        gameOverTimer = 3*60;
+        setUserToOrigin();
+        $('#endTitle').attr('value', 'Game Over!');
+        $('#endScore').attr('value', 'Score: ' + score);
+        $('#endAgain').attr('value', 'Click to play again!');
+
+
+
+    } //game over
+
+    var totalSeconds = parseInt(timer/60);
+    var minu = parseInt( totalSeconds /60);
+
+    var sec = parseInt(totalSeconds % 60);
 
     // console.log("Time: " + minutes + ":" +seconds==60? 0:seconds);
-    var displaySec = (seconds==60? 0:seconds);
+    var displaySec = (sec<10? "0"+sec:sec);
 
-    $("#timer").attr("value", "Time: " + minutes + ":" + displaySec);
+    // if(displaySec<)
+
+    $("#timer").attr("value", "Time: " + minu + ":" + displaySec);
 }
 
 function isBrowserMobile() {
@@ -150,6 +172,8 @@ function layoutGame(){
     world.camera.holder.append(scoreHolder[0]); //add score display
     world.camera.holder.append(timerHolder[0]); //add timer display
     timer = 180*60;
+    gameOverTimer = 0;
+    score = 0;
 
     layoutMap(world);
     layoutLogs(world);
@@ -188,7 +212,12 @@ function punishNaughtyUserWhoGoesBeyondBound(){
 
     if (!isPointInsideRect(userX, userY, -50, -50, 50, 50)) {
         score -= 1;
-        world.setUserPosition(startX, startY, startZ);
+        setUserToOrigin();
     };
 }
 
+function setUserToOrigin(){
+
+    world.setUserPosition(startX, startY, startZ);
+    world.camera.holder.setAttribute("rotation", "0 1.67 0");
+}
