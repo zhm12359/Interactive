@@ -19,7 +19,6 @@ var deadTimes = 0;
 var isMobile = false;
 
 var startScreen;
-var endScreen;
 
 var scoreHolder;
 var timer = 180*60;//3minute timer
@@ -53,6 +52,7 @@ function setup() {
     timerHolder = $("#timer").clone();
     timerHolder.attr("color", "#FFF");
     $("#timer").remove();
+
 
 }
 

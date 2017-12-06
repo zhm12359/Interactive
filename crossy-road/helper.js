@@ -116,6 +116,20 @@ function layoutFences(w) {
     fence.addToWorld(w);
 }
 
+function layoutClouds(world){
+
+
+    for(var i=0; i<15; i++){
+
+        var wid = random(2,7);
+        var cloud = new Cloud({
+            x: random(-70, 70), y: random(14,23), z: random(-70, 70), width:wid, height:wid*0.6
+        });
+        cloud.addToWorld(world);
+    }
+
+}
+
 function refreshScore() {
     $("#score").attr("value", "Score: " + score);
 }
@@ -180,6 +194,7 @@ function layoutGame(){
     layoutCars(world);
     layoutFences(world);
     layoutCoins(world);
+    layoutClouds(world);
 }
 
 function changeDirectionIfNeeded(c){
