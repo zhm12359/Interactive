@@ -116,8 +116,23 @@ function layoutFences(w) {
     fence.addToWorld(w);
 }
 
-function displayScore() {
+function refreshScore() {
     $("#score").attr("value", "Score: " + score);
+}
+
+
+function refreshTimer(){
+
+    timer--;
+    var totalSeconds = int(timer/60);
+    var minutes = int( totalSeconds /60 - 0.5);
+
+    var seconds = int(totalSeconds - minutes*60);
+
+    // console.log("Time: " + minutes + ":" +seconds==60? 0:seconds);
+    var displaySec = (seconds==60? 0:seconds);
+
+    $("#timer").attr("value", "Time: " + minutes + ":" + displaySec);
 }
 
 function isBrowserMobile() {
@@ -132,7 +147,9 @@ function isBrowserMobile() {
 
 function layoutGame(){
 
-    world.camera.holder.append(scoreHolder[0]);
+    world.camera.holder.append(scoreHolder[0]); //add score display
+    world.camera.holder.append(timerHolder[0]); //add timer display
+    timer = 180*60;
 
     layoutMap(world);
     layoutLogs(world);
@@ -172,3 +189,4 @@ function punishNaughtyUserWhoGoesBeyondBound(){
         world.setUserPosition(startX, startY, startZ);
     };
 }
+

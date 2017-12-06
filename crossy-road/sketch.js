@@ -20,6 +20,9 @@ var isMobile = false;
 var startScreen;
 var scoreHolder;
 
+var timer = 180*60;//3minute timer
+var timerHolder;
+
 function preload() {
 }
 
@@ -34,6 +37,9 @@ function setup() {
     startScreen = $(".start");
     scoreHolder = $("#score").clone();
     $("#score").remove();
+
+    timerHolder = $("#timer").clone();
+    $("#timer").remove();
 
 
 }
@@ -61,12 +67,8 @@ function drawPlaying() {
         //mobile touch is less sensitive than PC click
         if(isMobile) world.moveUserForward(0.35);
         else world.moveUserForward(0.05);
-
     }
-
-    punishNaughtyUserWhoGoesBeyondBound()
-
-
+    punishNaughtyUserWhoGoesBeyondBound();
 
     cars.forEach(function (c) {
         c.move();
@@ -103,7 +105,7 @@ function drawPlaying() {
         var c = coins[i];
         if (c.checkCollision()) {
             score++;
-            displayScore();
+            refreshScore();
             world.remove(coins[i].body);
             world.remove(coins[i].marker);
             var newCoin = new Coin({
@@ -114,6 +116,7 @@ function drawPlaying() {
             newCoin.addToWorld(world);
         }
     }
+    refreshTimer();
 }
 
 function drawStart() {
