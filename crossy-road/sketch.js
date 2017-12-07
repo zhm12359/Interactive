@@ -34,9 +34,9 @@ var coinSound;
 var startScreenCar;
 
 function preload() {
-    carSound = loadSound('sounds/horn.ogg');
-    waterSound = loadSound('sounds/splash.ogg');
-    coinSound = loadSound('sounds/coin.ogg');
+    carSound = loadSound('sounds/horn.aac');
+    waterSound = loadSound('sounds/splash.aac');
+    coinSound = loadSound('sounds/coin.aac');
 }
 
 function setup() {
