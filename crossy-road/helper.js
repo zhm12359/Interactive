@@ -141,18 +141,7 @@ function refreshTimer(){
     timer--;
     if(timer===0) {
 
-        scoreHolder = $("#score").clone();
-        $("#score").remove();
-
-        timerHolder = $("#timer").clone();
-        $("#timer").remove();
-
-        state = 2;
-        gameOverTimer = 3*60;
-        setUserToOrigin();
-        $('#endTitle').attr('value', 'Game Over!');
-        $('#endScore').attr('value', 'Score: ' + score);
-        $('#endAgain').attr('value', 'Click to play again!');
+        setUpGameOver();
 
 
 
@@ -231,9 +220,38 @@ function punishNaughtyUserWhoGoesBeyondBound(){
     };
 }
 
+function setUpGameOver(){
+
+    $("#score").attr("value", "");
+    $("#timer").attr("value", "");
+
+    state = 2;
+    gameOverTimer = 3*60;
+    setUserToOrigin();
+    $('#endTitle').attr('value', 'Game Over!');
+    $('#endScore').attr('value', 'Score: ' + score);
+    $('#endAgain').attr('value', 'Click to play again!');
+
+
+
+    gameOverBg = new Plane({
+        x:-1, y:2, z:38, red: 150, blue:150, green:150,
+        width: 10, height: 4.5
+    });
+    world.add(gameOverBg);
+}
+
 function setUserToOrigin(){
 
     world.setUserPosition(startX, startY, startZ);
     world.camera.holder.setAttribute("rotation", "0 1.67 0");
     refreshScore();
+}
+
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
 }

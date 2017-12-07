@@ -19,6 +19,7 @@ var deadTimes = 0;
 var isMobile = false;
 
 var startScreen;
+var gameOverBg;
 
 var scoreHolder;
 var timer = 180*60;//3minute timer
@@ -47,13 +48,9 @@ function setup() {
     isMobile = isBrowserMobile();
 
     startScreen = $(".start");
-    scoreHolder = $("#score").clone();
-    scoreHolder.attr("color", "#FFF");
-    $("#score").remove();
+    scoreHolder = $("#score");
 
-    timerHolder = $("#timer").clone();
-    timerHolder.attr("color", "#FFF");
-    $("#timer").remove();
+    timerHolder = $("#timer");
 
     w = 4;
     offset = 30;
@@ -149,7 +146,6 @@ function drawPlaying() {
         if (c.checkCollision()) {
             coinSound.play();
             score++;
-            refreshScore();
             world.remove(coins[i].body);
             world.remove(coins[i].marker);
             var newCoin = new Coin({
@@ -161,6 +157,7 @@ function drawPlaying() {
         }
     }
     refreshTimer();
+    refreshScore();
 }
 
 function drawStart() {
@@ -182,15 +179,16 @@ function drawGameOver() {
         $('#endTitle').attr('value', '');
         $('#endScore').attr('value', '');
         $('#endAgain').attr('value', '');
+        world.remove(gameOverBg);
+
+        refreshScore();
+        refreshTimer();
+
+        timer=3*60*60;
+        score=0;
+
         state = 1;
     }
 }
 
 
-function wait(ms){
-    var start = new Date().getTime();
-    var end = start;
-    while(end < start + ms) {
-        end = new Date().getTime();
-    }
-}
