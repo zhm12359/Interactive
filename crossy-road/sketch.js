@@ -139,7 +139,8 @@ function drawPlaying() {
     if (drowning && userZ >= -10 && userZ <= 10) {
         deadTimes++;
         score--;
-        waterSound.play();
+        waterSound.play(0, 2);
+        wait(500);
         setUserToOrigin();
     }
 
@@ -185,3 +186,11 @@ function drawGameOver() {
     }
 }
 
+
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
+}
