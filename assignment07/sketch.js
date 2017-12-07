@@ -14,6 +14,7 @@ var kirby2;
 
 var kirby;
 var score = 0;
+var theCanvas;
 
 // lots of bees!
 var theMissiles = [];
@@ -30,7 +31,12 @@ function setup() {
     // note that this sketch has been scaled up to 2x its normal size --
     // the code below uses a scaling factor of 2 to compare video resolution (320x240) with
     // screen resolution (640x480)
-    createCanvas(640, 480);
+    theCanvas = createCanvas(640, 480);
+
+    theCanvas.style('display', 'block');
+    theCanvas.style('margin', 'auto');
+    theCanvas.parent("#holder");
+
     noStroke();
 
     // start up our web cam
