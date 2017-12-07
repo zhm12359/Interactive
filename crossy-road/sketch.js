@@ -30,6 +30,8 @@ var carSound;
 var waterSound;
 var coinSound;
 
+var startScreenCar;
+
 function preload() {
     carSound = loadSound('sounds/horn.ogg');
     waterSound = loadSound('sounds/splash.ogg');
@@ -52,6 +54,17 @@ function setup() {
     timerHolder = $("#timer").clone();
     timerHolder.attr("color", "#FFF");
     $("#timer").remove();
+
+    w = 4;
+    offset = 30;
+    startScreenCar = new Car({
+        x: 0, y: -3, z: offset,
+        width: w, height: w / 5, depth: random(1, 2),
+        radius: w/7,
+        red: random(255), green: random(255), blue: random(255),
+        speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
+    });
+    startScreenCar.addToWorld(world);
 
 
 }
@@ -87,7 +100,7 @@ function drawPlaying() {
 
     cars.forEach(function (c) {
         c.move();
-        changeDirectionIfNeeded(c);
+        changeDirectionIfNeeded(c, 50);
 
         if (c.checkCollision()) {
             deadTimes++;
@@ -156,6 +169,9 @@ function drawStart() {
         layoutGame();
         state=1;
     }
+
+    startScreenCar.move();
+    changeDirectionIfNeeded(startScreenCar, 20);
 
 }
 

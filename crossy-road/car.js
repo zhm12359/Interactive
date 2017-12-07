@@ -30,7 +30,7 @@ function Car(opt) {
 
     this.speed = opt.speed;
 
-    var r = opt.y - opt.height;
+    var r = opt.radius? opt.radius: opt.y - opt.height;
 
     this.tires.push(new Tire({
         x: opt.x - opt.width / 4,
