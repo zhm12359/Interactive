@@ -24,6 +24,7 @@ var gameOverBg;
 var scoreHolder;
 var timer;
 var timerHolder;
+var lastSec;
 
 var gameOverTimer;
 
@@ -162,6 +163,7 @@ function drawStart() {
     if (mouseIsPressed) {
         startScreen.remove();
         layoutGame();
+        lastSec = second();
         state = 1;
     }
 
@@ -181,10 +183,7 @@ function drawGameOver() {
         refreshScore();
         refreshTimer();
 
-        if (isMobile)
-            timer = 3 * 60 * 30;
-        else
-            timer = 3 * 60 * 60;
+        timer = 180;
 
         score = 0;
 

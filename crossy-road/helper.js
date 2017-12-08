@@ -89,7 +89,7 @@ function layoutLogs(w) {
 
 function layoutCoins(w) {
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 4; i++) {
         var coin = new Coin({
             x: random(-43, 43),
             z: random(-43, -15)
@@ -98,7 +98,7 @@ function layoutCoins(w) {
         coins.push(coin);
     }
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 4; i++) {
         var coin = new Coin({
             x: random(-43, 43),
             z: random(15, 43)
@@ -139,19 +139,19 @@ function refreshScore() {
 // var seconds;
 function refreshTimer() {
 
-    timer--;
+    var curr = second();
+    if (curr !== lastSec) {
+        timer--;
+        lastSec = curr;
+    }
+
     if (timer === 0) {
 
         setUpGameOver();
 
     } //game over
 
-    var totalSeconds;
-    if (isMobile) {
-        totalSeconds = parseInt(timer / 30);
-    } else {
-        totalSeconds = parseInt(timer / 60);
-    }
+    var totalSeconds = parseInt(timer);
 
     var minu = parseInt(totalSeconds / 60);
     var sec = parseInt(totalSeconds % 60);
@@ -174,10 +174,9 @@ function layoutGame() {
 
     world.camera.holder.append(scoreHolder[0]); //add score display
     world.camera.holder.append(timerHolder[0]); //add timer display
-    if (isMobile)
-        timer = 180 * 30;
-    else
-        timer = 180 * 60;
+
+    timer = 180;
+    lastSec = second();
 
     gameOverTimer = 0;
     score = 0;
@@ -230,10 +229,7 @@ function setUpGameOver() {
     $("#timer").attr("value", "");
 
     state = 2;
-    if (isMobile)
-        gameOverTimer = 3 * 30;
-    else
-        gameOverTimer = 3 * 60;
+    gameOverTimer = 3 * 60;
 
     setUserToOrigin();
     $('#endTitle').attr('value', 'Game Over!');

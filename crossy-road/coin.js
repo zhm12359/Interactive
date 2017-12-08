@@ -18,7 +18,7 @@ function Coin(opts) {
 
     this.marker = new Octahedron({
         x: this.x,
-        y: 5,
+        y: 8,
         z: this.z,
         scaleY: 1.5,
         red: 0,
