@@ -1,59 +1,30 @@
-# Final Project: VR Crossy Road
-Users can use VR Goggle or Dance Pad (to be decided) to move characters around to avoid the car.
+# Interactive Computing Final Project: Crossy Road VR
+Hanming Zeng and Herbert Li
 
+### Introduction:
+Crossy Road is a VR game where the user tries to collects coins
+on the map while dodging cars and making sure not to fall in the water.
+You only have three minutes to collect as many coins as you can!
+Be careful, get hit and you'll respawn at the start of map!
 
-## Object: Car(opt)
-### Argument
-An opt Object that specifies:
-```
-    x,y,z  //those will be the center point of the lowerBody's upper surface's center
-    height, width, depth //those will be lowerBody's height and width and depth
-    red, green, blue // colors
-    speed // initial moving speed
-```
-### Field:
-```
-speed // initial moving speed
-tires, // array of Tires; populated automatically
-upperBody, lowerBody, light   //main body of the car (Box, Box, Cone)
-addToWorld(w) //a function that adds the car to the world w
-move() // a function that make the car move according to the speed given in the field
-```
-### Usage:
-```javascript
-world = new World('VRScene');
-var car = new Car({
-            x: random(-100, 100), y: w/3, z: offset,
-            width:w, height:w/5,depth: random(1,2),
-            red: random(255), green:random(255), blue:random(255),
-            asset:"gold",
-            speed: random(0.05, 0.3) * ( random(-1,1) > 0 ? 1 : -1)
-        });
-car.addToWorld(world);
-```
+### How to Play:
+Pretty simple controls, click to move forward. With a VR headset, look around as
+you normally would, in the browser you can drag to pan around the space.
 
-## Object: Tire(opt)
-### Argument
-An opt Object that specifies:
-```
-    x,y,z  // position of the tire
-    radius, radiusTubular //radius+radisTubular = the actual radius of the object
-    red, green, blue // colors
-```
-### Field:
-```
-outerFrame, // outerFrame of the tire (Torus)
-innerBars   //an array of 8 Box objects
-addToWorld(w) //a function that adds the car to the world w
-nudge(x,y,z) // a function that make the tire move in the direction specified
-spin(s) //a function that makes the tire spin given a speed s
-```
-### Usage:
-```javascript
-world = new World('VRScene');
-var r = 2;
-var tire = new Tire({
-                  x: 2, y: 2, z: 2, radius: r/20*19, radiusTubular: r/20, red:0, green:0, blue:0
-              });
-tire.addToWorld(world);
-```
+### Implementation Details:
+* Several classes for Cars, Logs, and Coins
+    * checkCollision(), move(), display() methods
+* Several classes for generating the map, e.g. Fence, Road, River
+    * made laying out the map pretty easy and makes it easy to extend the map
+* Text display/manipulation done using jQuery
+
+### Challenges:
+Some of the challenges we faced were (in no particular order):
+* Getting to Aframe in general
+* Drawing text in VR
+* Handling log interactions (having the user dirft with logs)
+
+## Moving Forward:
+We initially wanted to include different game modes in the game.
+In the end, we ran out of time, however if we were given more time, we would've added
+an arcade/endless mode, where is goal is just to see how far you can go.

@@ -22,10 +22,10 @@ var startScreen;
 var gameOverBg;
 
 var scoreHolder;
-var timer = 180*60;//3minute timer
+var timer;
 var timerHolder;
 
-var gameOverTimer = 0;
+var gameOverTimer;
 
 var carSound;
 var waterSound;
@@ -57,18 +57,15 @@ function setup() {
     startScreenCar = new Car({
         x: 0, y: -3, z: offset,
         width: w, height: w / 5, depth: random(1, 2),
-        radius: w/7,
+        radius: w / 7,
         red: random(255), green: random(255), blue: random(255),
         speed: random(0.05, 0.3) * ( random(-1, 1) > 0 ? 1 : -1)
     });
     startScreenCar.addToWorld(world);
 
-
 }
 
 function draw() {
-
-
 
     switch (state) {
         case 0:
@@ -87,7 +84,7 @@ function drawPlaying() {
 
     if (mouseIsPressed) {
         //mobile touch is less sensitive than PC click
-        if(isMobile) world.moveUserForward(0.25);
+        if (isMobile) world.moveUserForward(0.25);
         else world.moveUserForward(0.05);
     }
     punishNaughtyUserWhoGoesBeyondBound();
@@ -162,10 +159,10 @@ function drawPlaying() {
 
 function drawStart() {
 
-    if(mouseIsPressed){
+    if (mouseIsPressed) {
         startScreen.remove();
         layoutGame();
-        state=1;
+        state = 1;
     }
 
     startScreenCar.move();
@@ -184,8 +181,12 @@ function drawGameOver() {
         refreshScore();
         refreshTimer();
 
-        timer=3*60*60;
-        score=0;
+        if (isMobile)
+            timer = 3 * 60 * 30;
+        else
+            timer = 3 * 60 * 60;
+
+        score = 0;
 
         state = 1;
     }
