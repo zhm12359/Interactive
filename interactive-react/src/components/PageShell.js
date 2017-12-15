@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import logo from '../logo.svg';
 
 const PageShell = Page => {
     return props =>
@@ -12,7 +11,6 @@ const PageShell = Page => {
                 transitionLeaveTimeout={200}
                 transitionName={props.match.path === '/thanks' ? 'SlideIn' : 'SlideOut'}
             >
-                <img src={logo} alt="" />
                 <Page {...props} />
             </ReactCSSTransitionGroup>
         </div>;

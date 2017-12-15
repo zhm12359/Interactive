@@ -26,7 +26,7 @@ import AnimatedWrapper from "./animated-wrapper";
 class Home extends Component {
     render() {
         return (
-            <div className="page">
+            <div>
                 <h1>Home</h1>
                 <p>Hello from the home page!</p>
             </div>
